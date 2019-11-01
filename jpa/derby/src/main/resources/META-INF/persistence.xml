@@ -1,0 +1,18 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+  version="2.1">
+  <persistence-unit name="jpa-example" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.lini.persistence.entity.Employee</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:JavaDbEmbeddedTest;create=true;user=John;password=Doe" />
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+      <!--drop and recreate database objects on deployment (for testing purposes)-->
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+      <property name="javax.persistence.schema-generation.create-source" value="metadata" />
+      <property name="javax.persistence.schema-generation.drop-source" value="metadata" />
+      <property name="javax.persistence.sql-load-script-source" value="META-INF/init-derby.sql" />
+    </properties>
+  </persistence-unit>
+</persistence>
