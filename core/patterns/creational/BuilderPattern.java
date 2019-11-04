@@ -1,5 +1,7 @@
 /**
- * Builder Pattern
+ * Builder Pattern: The Builder pattern can be used to - build a complex object
+ * otherwise would require a big constructor with a lot of parameters - build
+ * different types of object that share the same construction process.
  */
 public class BuilderPattern {
 
@@ -121,9 +123,14 @@ public class BuilderPattern {
 
     /**
      * The builder interface defines only the common build steps which are
-     * implemented by the concrete Builder. Each concrete Builder produces
-     * an own representation (product type), that may not be necessarily
-     * in the same object hierarchy with other representations.
+     * implemented by the concrete Builders. Each concrete Builder produces
+     * an own representation (product type), that may not necessarily belong
+     * to the same object hierarchy with other representations.
+     * 
+     * The getResult() method is not implemented in the Builder interface
+     * if the output representations are not on the same hierarchy (e.g. Car
+     * and Manual). But if you are dealing with creating objects of the same
+     * hierarchy you can define the method in Builder.
      */
     public static interface Builder {
         Builder reset();
@@ -236,6 +243,10 @@ public class BuilderPattern {
      * a Sport car and its Manual. The Director itself does not create the objects
      * but just encapsulates the logic to create one. The object is created by the
      * corresponding builder.
+     * 
+     * If you are dealing with the objects of the same hierarchy, Director can get
+     * the created object from abstract Builder and return here. Otherwise you have
+     * to retrieve the object from the concrete builder.
      */
     public static class Director {
 
@@ -245,7 +256,9 @@ public class BuilderPattern {
         }   
 
         /**
-         * Build a special sport car model with pre-defined configuration
+         * Build a special sport car model with pre-defined configuration. This 
+         * process can also be re-used to create other representation (e.g. Car
+         * Manual)
          * @param builder
          * @return Car instance
          */
