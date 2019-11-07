@@ -79,6 +79,8 @@ public class Clock extends JFrame {
 	public class ClockPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
+		private static final long MEGABYTE = 1024L * 1024L;
+
 		private static final double RADIAN = 180.0 / Math.PI; 
 		
 		private int timeSecond;
@@ -105,7 +107,11 @@ public class Clock extends JFrame {
 		    timeMinute = Calendar.getInstance().get(Calendar.MINUTE);
 		    timeHour   = Calendar.getInstance().get(Calendar.HOUR);
 		    paintFaceFromImage(g2d);
-		    paintHandsFromImages(g2d);
+			paintHandsFromImages(g2d);
+			
+			Runtime runtime = Runtime.getRuntime();
+		    long memory = runtime.totalMemory() - runtime.freeMemory();
+		    System.out.println("Used memorys: " + memory + "(" + (memory / MEGABYTE) + " MB)");
 		}
 
 		/**
