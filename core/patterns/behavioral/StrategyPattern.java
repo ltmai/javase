@@ -94,7 +94,7 @@ public class StrategyPattern {
     }
 
     /**
-     * Context
+     * Context: holds the current strategy
      * Strategy pattern lets you alter the object's behavior at runtime.
      */
     public static class Context {
