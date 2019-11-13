@@ -4,7 +4,8 @@
 public class BridgePattern {
 
     /**
-     * Shape
+     * Shape : simplified version of Shape objects 
+     * that knows how to draw itself.
      */
     public static class Shape {
 
@@ -39,7 +40,8 @@ public class BridgePattern {
     }
 
     /**
-     * Graphics
+     * Graphics : 
+     * The interface of implementations
      */
     public interface Graphics {
 
@@ -88,19 +90,20 @@ public class BridgePattern {
     }
 
     /**
-     * Abstract
+     * GraphicsManager : 
+     * The abstraction that delegates calls to an implementation
      */
     public static class GraphicsManager {
     
-        protected Graphics graphics;
+        protected Graphics graphicsImpl;
 
         public GraphicsManager(Platform platform) {
             switch (platform) {
                 case WINDOWS:
-                    graphics = new WindowsGraphics();
+                    graphicsImpl = new WindowsGraphics();
                     break;
                 case OSX:
-                    graphics = new OsxGraphics();
+                    graphicsImpl = new OsxGraphics();
                     break;
                 default:
                     throw new RuntimeException("Unsupported platform");
@@ -108,16 +111,17 @@ public class BridgePattern {
         }
 
         public void drawPoint(int x, int y) {
-            graphics.drawPoint(x, y);
+            graphicsImpl.drawPoint(x, y);
         }
 
         public void drawLine(int x1, int y1, int x2, int y2) {
-            graphics.drawLine(x1, y1, x2, y2);
+            graphicsImpl.drawLine(x1, y1, x2, y2);
         }
     }
 
     /**
-     * AdvancedGraphicsManager
+     * AdvancedGraphicsManager: 
+     * An enhanced GraphicsManager with the capability to draw shapes.
      */
     public static class AdvancedGraphicsManager extends GraphicsManager {
     
@@ -125,8 +129,12 @@ public class BridgePattern {
             super(platform);
         }
 
+        /**
+         * This extended capability is independent of implementations
+         * @param shape
+         */
         public void drawShape(Shape shape) {
-            shape.draw(this.graphics);
+            shape.draw(this.graphicsImpl);
         }
     }
 

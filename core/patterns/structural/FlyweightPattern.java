@@ -3,6 +3,9 @@
  */
 public class FlyweightPattern {
 
+    /**
+     * Helper enumeration
+     */
     public enum Color {
         RED,
         GREEN,
@@ -10,13 +13,18 @@ public class FlyweightPattern {
     };
 
     /**
-     * Sprite: holds the large visual graphics data
+     * Sprite: Helper enummeration.
+     * In reality, it may hold the large visual graphics data
+     * shared by all moving particles.
      */
     public enum Sprite {
         FIRE,
         SPRITE
     };
 
+    /**
+     * Helper class
+     */
     public static class Coord {
         private int x, y;
 
@@ -47,6 +55,9 @@ public class FlyweightPattern {
         }
     }
 
+    /**
+     * Helper class
+     */
     public static class Direction {
         private int x, y;
 
@@ -65,7 +76,7 @@ public class FlyweightPattern {
     }
 
     /**
-     * Particle: holds common core data
+     * Particle: holds common core data and behavior
      */
     public static class Particle {
     
@@ -116,6 +127,7 @@ public class FlyweightPattern {
     public static void main(String[] args) {
         Particle simpleBullet = new Particle(Color.RED, Sprite.FIRE);
         MovingParticle movingBullet = new MovingParticle(simpleBullet, new Coord(0, 0), new Direction(1, 2));
+
         movingBullet.move();
         movingBullet.draw();
     }

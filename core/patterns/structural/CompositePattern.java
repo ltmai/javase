@@ -8,11 +8,6 @@ public class CompositePattern {
 
     /**
      * Component: the bussiness logic interface
-     * 
-     * This interface can be intergrated into Composite so that the 
-     * concrete classes (File, Folder) do not have to implement both
-     * interfaces. However since the methods are not much related we
-     * separate them into two interfaces. 
      */
     public interface Component {
 
@@ -36,7 +31,7 @@ public class CompositePattern {
     /**
      * File : concrete component
      */
-    public static class File implements Component, Composite {
+    public static class File implements Component {
         private String filePath;
 
         public File(String filePath) {
@@ -51,21 +46,6 @@ public class CompositePattern {
         @Override
         public int getSize() {
             return filePath.length();
-        }
-
-        @Override
-        public void addChild(Component child) {
-            throw new RuntimeException("Oops!");
-        }
-
-        @Override
-        public List<Component> getChildren() {
-            throw new RuntimeException("Oops!");
-        }
-
-        @Override
-        public void removeChild(Component child) {
-            throw new RuntimeException("Oops!");
         }
     }
 
@@ -107,17 +87,31 @@ public class CompositePattern {
         }
     }
     
+    /**
+     * Client code knows nothing about the difference
+     * between File and Folder and treats them equally.
+     */
+    public static class Client {
+        public void process(Component component) {
+            System.out.println(String.format("Component %s size: %d bytes", component.getPath(), component.getSize()));    
+        }
+    }
 
     public static void main(String[] args) {
-        Folder folder = new Folder("/file/path");
-        File file1 = new File("/file/path/File1");
-        File file2 = new File("/file/path/File2");
-        File file3 = new File("/file/path/File3");
+        Folder folder = new Folder("/folder/path");
+        File file1 = new File("/folder/path/file1");
+        File file2 = new File("/folder/path/file2");
+        File file3 = new File("/folder/path/file3");
         
         folder.addChild(file1);
         folder.addChild(file2);
         folder.addChild(file3);
 
-        System.out.println(String.format("Folder size: %d bytes", folder.getSize()));
+        Client client = new Client();
+        
+        client.process(file1);
+        client.process(file2);
+        client.process(file3);
+        client.process(folder);
     }
 }
