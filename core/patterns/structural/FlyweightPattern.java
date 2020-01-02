@@ -1,10 +1,28 @@
 /**
- * FlyweightPattern
+ * Flyweight is a structural design pattern that lets you fit more objects into
+ * the available amount of RAM by sharing common parts of state between multiple
+ * objects instead of keeping all of the data in each object.
+ * 
+ * In the following example:
+ * 
+ * Enumeration Color: helper data type for colors.
+ * 
+ * Enumeration Sprite: helper data type for sprites.
+ * 
+ * Class Coord: helper data type for coordinates.
+ * 
+ * Class Direction: helper data type for directions.
+ * 
+ * Class Particle: represents the common large data shared by light-weight
+ * objects.
+ * 
+ * Class MovingParticle: represents the light-weight objects that share the
+ * common data (contains a reference to a Particle instance).
  */
 public class FlyweightPattern {
 
     /**
-     * Helper enumeration
+     * Helper enumeration to represent color.
      */
     public enum Color {
         RED,
@@ -13,9 +31,8 @@ public class FlyweightPattern {
     };
 
     /**
-     * Sprite: Helper enummeration.
-     * In reality, it may hold the large visual graphics data
-     * shared by all moving particles.
+     * Helper enummeration to represent sprite data.
+     * In reality, it may hold the large visual graphics data shared by all moving particles.
      */
     public enum Sprite {
         FIRE,
@@ -23,7 +40,7 @@ public class FlyweightPattern {
     };
 
     /**
-     * Helper class
+     * Helper class to represent coodinates.
      */
     public static class Coord {
         private int x, y;

@@ -2,7 +2,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * CompositePattern
+ * Composite pattern: lets you compose objects into tree structures to represent
+ * the part-whole hierarchies. Implementing the composite pattern lets client treat 
+ * individual objects and compositions uniformly.
+ * 
+ * In the following example:
+ * 
+ * Interface Component: the unified interface to objects individual or compositions.
+ * 
+ * Interface Composite: the interface to compositions, specifying the composition logic.
+ * 
+ * Class File: represents the individual object which can be added to composition. 
+ * File implements the Component interface.
+ * 
+ * Class Folder: represents the composition, containing individual objects. 
+ * Folder implements the Component AND Composite interface.
+ * 
+ * 
  */
 public class CompositePattern {
 

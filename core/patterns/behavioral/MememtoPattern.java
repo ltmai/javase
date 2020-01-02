@@ -1,5 +1,5 @@
 /**
- * MememtoPattern
+ * Mememto pattern
  */
 public class MememtoPattern {
 

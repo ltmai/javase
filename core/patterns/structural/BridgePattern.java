@@ -5,10 +5,10 @@
  * In the following example:
  * 
  * GraphicsManager is the abstraction that delegates real drawing work to the
- * platform-specific implementations Graphics (Windows, OSX).
+ * platform-specific implementations of the interface Graphics (Windows, OSX).
  * 
  * EnhancedGraphicsManager is the extended GraphicsManager, enhanced with new
- * capability to draw shapes.
+ * capability to draw shapes (still using the same services from Graphics).
  */
 public class BridgePattern {
 

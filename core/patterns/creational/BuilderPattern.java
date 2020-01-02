@@ -17,7 +17,7 @@
  * Interface Builder, class CarBuilder, class ManualBuilder: the interface to
  * Builder and concrete implementations. Beside overriding the methods in
  * Builder, the CarBuilder and ManualBuilder classes also define their custom
- * build() method to build and return the concrete object.
+ * build() method to build and return a concrete object.
  * 
  * Class Director: the optional class, that plays the role as an expert who
  * knows to build specific types of Product. Director can also be thought of as

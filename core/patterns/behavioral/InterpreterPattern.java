@@ -1,5 +1,5 @@
 /**
- * InterpreterPattern
+ * Interpreter pattern
  */
 public class InterpreterPattern {
 

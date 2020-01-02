@@ -7,6 +7,21 @@ import java.util.List;
  * 
  * This decouples the dependencies between components and puts
  * the event handling logic at a central place.
+ * 
+ * In the following example:
+ * 
+ * Class Employee: helper class that serves as an event type.
+ * 
+ * Class Department: the abstract component that sends and receives events.
+ * 
+ * Class HrDepartment, ItDepartment, WhDeparment: the concrete implementations of Department. 
+ * 
+ * Class Mediator: the abstract mediator that handles communication between components.
+ * 
+ * Class DeparmentMediator: a concrete mediator that handles communication between Departments. 
+ * 
+ * This class handle forwarding events of type Employee among Departments, but it can also be 
+ * extended to handles other types of events other than Employee.  
  */
 public class MediatorPattern {
 
@@ -90,7 +105,7 @@ public class MediatorPattern {
             super(mediator);
         }
     }
-    
+
     /**
      * Mediator interface
      * Mediator may have other notify(Event) methods to handle

@@ -3,6 +3,16 @@
  * 
  * Decorator pattern lets you attach new behaviors to existing object without
  * changing it.
+ * 
+ * In the following example:
+ * 
+ * Interface Pizza: the interface to objects that can be decorated.
+ * 
+ * Class SimplePizza: a concrete implementation of decoration-able.
+ * 
+ * Class PizzaWithCheese: a concrete decorator that extends the interface.
+ * 
+ * Class PizzaWithSalami: a concrete decorator that extends the interface.
  */
 public class DecoratorPattern {
 

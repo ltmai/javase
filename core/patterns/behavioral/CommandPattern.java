@@ -3,7 +3,7 @@ import java.util.List;
 
 /**
  * The Command pattern suggests that modules encapsulate Request
- * together with all necessary information. 
+ * together with all necessary information to process that Request. 
  * 
  * This transformation lets you parameterize methods with different 
  * requests, delay or queue a request's execution, and support undoable 
