@@ -3,6 +3,7 @@ package com.lini.persistence.main;
 import java.sql.Date;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import com.lini.persistence.entity.Employee;
@@ -45,8 +46,10 @@ public class Main {
 	 * @param em
 	 */
 	public static void testQuery(EntityManager em) {
+		EntityTransaction transaction = em.getTransaction();
+
 		try {
-			em.getTransaction().begin();
+			transaction.begin();
 
 			TypedQuery<Employee> query = em.createQuery("SELECT e FROM Employee e", Employee.class);
 			if (query.getResultList().isEmpty()) {
@@ -56,12 +59,19 @@ public class Main {
 				System.out.println(query.getResultList().size() + " employees found");
 			}
 	
-			em.getTransaction().commit();
+			transaction.commit();
+			transaction = null;
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Initial cause:" + Utils.getInitialCauseMessage(e));
-			em.getTransaction().rollback();
+			
+			try {
+				transaction.rollback();
+			} catch (Exception ee) {
+				ee.printStackTrace();				
+				em.close();
+			}
 		}
 	}
 
@@ -90,7 +100,9 @@ public class Main {
 	 * disconnect and clean up
 	 */
 	private static void disconnectDb(EntityManager em) {
-		em.close();
+		if (em.isOpen()) {
+			em.close();
+		}
 		PersistenceManager.INSTANCE.close();
 	}
 
