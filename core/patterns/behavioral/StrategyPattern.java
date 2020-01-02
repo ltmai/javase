@@ -4,17 +4,29 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 
 /**
- * Strategy Pattern allows you define a family of algorithms
- * and make them interchangable at run-time.
+ * Strategy Pattern allows you define a family of algorithms and
+ * make them interchangable at run-time.
  * 
- * You can introduce new strategies without having to change
- * the context, HOWEVER the client code should be aware of the
+ * You can introduce new strategies without having to change the
+ * context, HOWEVER the client code should be aware of the
  * available strategies (which is a downside of this pattern).
+ * 
+ * In the following examples:
+ * 
+ * Interface HashStrategy: The abstraction of hashing strategies. 
+ * 
+ * Class Md5Strategy, Sha256Strategy: two concrete implementation
+ * of HashStrategy.
+ * 
+ * Class Context: holds the current strategy and lets you alter
+ * the object's behavior at run-time.
  */
 public class StrategyPattern {
 
     /**
-     * Strategy
+     * Interface HashStrategy : defines the interface to calculate
+     * hash of String input.  
+     * 
      * Strategy pattern lets you extract the varying behavior into
      * a separate class hierarchy and thereby isolate the code, the
      * internal data and dependencies of various algorithms from the

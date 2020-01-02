@@ -5,6 +5,15 @@
  * Adapter changes the interface of an existing object. Proxy provides it with
  * the same interface. Decorator provides it with an enhanced interface. Facade
  * defines a new interface for existing objects.
+ * 
+ * In the following example:
+ * 
+ * Interface Woker is the expected interface.
+ * 
+ * Class Service is the existing service to be adapted.
+ * 
+ * Class ServiceAdapter is the adapter that implments the Worker and delegates
+ * works to Service.
  */
 public class AdapterPattern {
 

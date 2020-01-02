@@ -6,10 +6,16 @@ import java.util.Map;
  */
 public class ProxyPattern {
 
+    /**
+     * Abstract service
+     */
     public interface Service {
         String retrieveFile(String uri);
     }
 
+    /**
+     * RemoteService class, for which we create the proxy
+     */
     public static class RemoteService implements Service {
         @Override
         public String retrieveFile(String uri) {
@@ -18,6 +24,9 @@ public class ProxyPattern {
         }
     }
 
+    /**
+     * The proxy for an concrete Service
+     */
     public static class ServiceProxy implements Service {
 
         private Service service;
@@ -27,9 +36,6 @@ public class ProxyPattern {
             this.service = service;
         }
 
-        /**
-         * 
-         */
         @Override
         public String retrieveFile(String uri) {
             System.out.println("[Proxy  ] Retrieving " + uri);
@@ -53,8 +59,8 @@ public class ProxyPattern {
         ServiceProxy proxy = new ServiceProxy(new RemoteService());
         String uri_1 = "file_1";
         String uri_2 = "file_2";
-        System.out.println("[Client ] File content: " + proxy.retrieveFile(uri_1));
-        System.out.println("[Client ] File content: " + proxy.retrieveFile(uri_2));
-        System.out.println("[Client ] File content: " + proxy.retrieveFile(uri_1));
+        System.out.println("[Client ] File content: " + proxy.retrieveFile(uri_1)); // 1st time
+        System.out.println("[Client ] File content: " + proxy.retrieveFile(uri_2)); // 1st time
+        System.out.println("[Client ] File content: " + proxy.retrieveFile(uri_1)); // 2nd time
     }
 }

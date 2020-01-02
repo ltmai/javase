@@ -3,10 +3,14 @@
  */
 public class SingletonLazy {
     /**
-     * InnerSingletonLazy
+     * The Singleton class.
      */
     public static class Singleton {
 
+        /**
+         * The inner Singleton holder, which is not loaded before first use even 
+         * when the outer class Singleton already loaded.
+         */
         private static final class SingletonHolder {
             public static final Singleton INSTANCE = new Singleton();
         }
@@ -15,10 +19,18 @@ public class SingletonLazy {
             return SingletonHolder.INSTANCE;
         }
 
+        /**
+         * Static method that causes the class be loaded but no 
+         * instance created.
+         */
         public static void classIsLoaded() {
             System.out.println("Singleton class is loaded");
         }
 
+        /**
+         * Constructor: we would see the message printed out when 
+         * an instance of Singleton is created.
+         */
         private Singleton() {
             System.out.println("Create a instance of Singleton");
         }

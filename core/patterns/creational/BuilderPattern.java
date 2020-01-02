@@ -1,7 +1,31 @@
 /**
- * Builder Pattern: The Builder pattern can be used to - build a complex object
- * otherwise would require a big constructor with a lot of parameters - build
- * different types of object that share the same construction process.
+ * The Builder pattern can be used to:
+ * 
+ * - build a complex object otherwise would require a big constructor with a lot
+ * of parameters.
+ * 
+ * - build different types of object that share the same construction process.
+ * 
+ * In the following example:
+ * 
+ * Class Car: a complex object class to be built.
+ * 
+ * Class Manual: a complex object class that has similar build steps as Car.
+ * 
+ * Enum Engine, Material, Color: the helper enumeration for component types.
+ * 
+ * Interface Builder, class CarBuilder, class ManualBuilder: the interface to
+ * Builder and concrete implementations. Beside overriding the methods in
+ * Builder, the CarBuilder and ManualBuilder classes also define their custom
+ * build() method to build and return the concrete object.
+ * 
+ * Class Director: the optional class, that plays the role as an expert who
+ * knows to build specific types of Product. Director can also be thought of as
+ * specilized client code that builds most-used types of product. Director is
+ * needed when the construction logic should be reused, for instance to build a
+ * Sport car and its Manual. The Director itself does not create the objects but
+ * just encapsulates the logic to create one. The object is created by the
+ * corresponding builder.
  */
 public class BuilderPattern {
 
@@ -237,7 +261,7 @@ public class BuilderPattern {
 
     /**
      * Director is like an expert who knows how to build specific types of Product 
-     * (e.g. what components to be used, in which order). Director can also be thought 
+     * (what components to be used, in which order). Director can also be thought 
      * of as specilized client code that builds most-used types of product. Director
      * is needed when the construction logic should be reused, for instance to build
      * a Sport car and its Manual. The Director itself does not create the objects

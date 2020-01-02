@@ -1,93 +1,16 @@
 /**
- * BridgePattern
+ * BridgePattern The Bridge pattern decouples an abstraction and its
+ * implementation so that they can vary independently.
+ * 
+ * In the following example:
+ * 
+ * GraphicsManager is the abstraction that delegates real drawing work to the
+ * platform-specific implementations Graphics (Windows, OSX).
+ * 
+ * EnhancedGraphicsManager is the extended GraphicsManager, enhanced with new
+ * capability to draw shapes.
  */
 public class BridgePattern {
-
-    /**
-     * Shape : simplified version of Shape objects 
-     * that knows how to draw itself.
-     */
-    public static class Shape {
-
-        private int x, y;
-
-        public Shape(int x, int y) {
-            this.setX(x);
-            this.setY(y);
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
-
-        public void draw(Graphics graphics) {
-            System.out.println("Draw shape:");
-            graphics.drawLine(x, y, 200, 200);
-            graphics.drawLine(x, y, 400, 400);
-        };
-    }
-
-    /**
-     * Graphics : 
-     * The interface of implementations
-     */
-    public interface Graphics {
-
-        void drawPoint(int x, int y);
-
-        void drawLine(int x1, int y1, int x2, int y2);
-        
-    }
-
-    /**
-     * Windows graphics
-     */
-    public static class WindowsGraphics implements Graphics{
-    
-        @Override
-        public void drawPoint(int x, int y) {
-            System.out.println("[Windows] Draw point");
-        }
-
-        @Override
-        public void drawLine(int x1, int y1, int x2, int y2) {
-            System.out.println("[Windows] Draw line");
-        }
-    }
-
-    /**
-     * OsxGraphics
-     */
-    public static class OsxGraphics implements Graphics {
-    
-        @Override
-        public void drawPoint(int x, int y) {
-            System.out.println("[OSX] Draw point");
-        }
-
-        @Override
-        public void drawLine(int x1, int y1, int x2, int y2) {
-            System.out.println("[OSX] Draw line");
-        }
-    }
-
-    private enum Platform {
-        WINDOWS,
-        OSX,
-        LINUX
-    }
 
     /**
      * GraphicsManager : 
@@ -121,7 +44,7 @@ public class BridgePattern {
 
     /**
      * AdvancedGraphicsManager: 
-     * An enhanced GraphicsManager with the capability to draw shapes.
+     * GraphicsManager can be enhanded with new capability to draw shapes.
      */
     public static class AdvancedGraphicsManager extends GraphicsManager {
     
@@ -136,6 +59,77 @@ public class BridgePattern {
         public void drawShape(Shape shape) {
             shape.draw(this.graphicsImpl);
         }
+    }
+
+    /**
+     * Shape : simplified version of Shape objects that
+     * knows how to draw itself given a Graphics object
+     * that realizes the work on different platform.
+     */
+    public static class Shape {
+
+        private int x, y;
+
+        public Shape(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public void draw(Graphics graphics) {
+            System.out.println("Draw shape:");
+            graphics.drawLine(x, y, 200, 200);
+            graphics.drawLine(x, y, 400, 400);
+        };
+    }
+
+    /**
+     * Graphics : 
+     * The interface of implementations
+     */
+    public interface Graphics {
+
+        void drawPoint(int x, int y);
+
+        void drawLine(int x1, int y1, int x2, int y2);
+        
+    }
+
+    /**
+     * Windows graphics implementation
+     */
+    public static class WindowsGraphics implements Graphics{
+    
+        @Override
+        public void drawPoint(int x, int y) {
+            System.out.println("[Windows] Draw point");
+        }
+
+        @Override
+        public void drawLine(int x1, int y1, int x2, int y2) {
+            System.out.println("[Windows] Draw line");
+        }
+    }
+
+    /**
+     * OSX Graphics implementation
+     */
+    public static class OsxGraphics implements Graphics {
+    
+        @Override
+        public void drawPoint(int x, int y) {
+            System.out.println("[OSX] Draw point");
+        }
+
+        @Override
+        public void drawLine(int x1, int y1, int x2, int y2) {
+            System.out.println("[OSX] Draw line");
+        }
+    }
+
+    private enum Platform {
+        WINDOWS,
+        OSX,
+        LINUX
     }
 
     /**

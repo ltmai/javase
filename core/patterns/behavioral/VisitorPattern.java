@@ -1,12 +1,25 @@
 /**
  * VisitorPattern
  * 
- * Visitor pattern encapsulate operations on a object hierarchy, allows you de
- * ine new operations without changing the classes.
+ * Visitor pattern encapsulate the operations on a object hierarchy, and allows
+ * you define new operations without changing the classes.
+ * 
+ * In Visitor pattern, all operations implements a common interface Operation,
+ * which defines visit() methods for ALL CONCRETE input types from the Shape
+ * hierachy, which is a down-side of this pattern.
+ * 
+ * In the following example:
+ * 
+ * Class Point, Vector: are helper classes in defining Shapes and Operations.
+ * 
+ * Interface Shape, class Circle, Triangle: the target object hierarchy.
+ * 
+ * Interface Operation, class Transition, Rotation: are the operations on that
+ * hierarchy.
  */
 public class VisitorPattern {
     /**
-     * 
+     * Class Point: helper class used in defining Shapes.
      */
     public static class Point {
 
@@ -39,7 +52,7 @@ public class VisitorPattern {
     }
 
     /**
-     * 
+     * Class Vector: help class used in define Operations.
      */
     public static class Vector extends Point {
 
@@ -49,7 +62,7 @@ public class VisitorPattern {
     }
 
     /**
-     * Task
+     * Shape: the abstration of Shape.
      */
     public interface Shape {
         /**
@@ -61,7 +74,7 @@ public class VisitorPattern {
     }
 
     /**
-     * Triangle
+     * Triangle: Concrete Shape.
      */
     public static class Triangle implements Shape {
 
@@ -109,7 +122,7 @@ public class VisitorPattern {
     }
 
     /**
-     * Circle
+     * Circle: Concrete Shape
      */
     public static class Circle implements Shape {
 
@@ -151,7 +164,7 @@ public class VisitorPattern {
 
     /**
      * Operation interface
-     * This interface must define visit() methods with all possible input
+     * This interface must define visit() methods with ALL CONCRETE input
      * types from the Shape hierachy, which is a down-side of this pattern.
      */
     public interface Operation {

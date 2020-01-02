@@ -1,5 +1,6 @@
 /**
- * SingletonEnum
+ * Singleton pattern can be implemented as Enumeration which is inherently
+ * singleton.
  */
 public class SingletonEnum {
     enum Singleton {

@@ -90,6 +90,15 @@ public class MediatorPattern {
             super(mediator);
         }
     }
+    
+    /**
+     * Mediator interface
+     * Mediator may have other notify(Event) methods to handle
+     * types of events other than Employee, e.g. Order.
+     */
+    public interface Mediator {
+        void notify(Department sender, Employee employee);
+    }
 
     /**
      * DepartmentMediator
@@ -114,14 +123,6 @@ public class MediatorPattern {
         }
     }
 
-    /**
-     * Mediator interface
-     * Mediator may have other notify(Event) methods to handle
-     * types of events other than Employee, e.g. Order.
-     */
-    public interface Mediator {
-        void notify(Department sender, Employee employee);
-    }
 
     public static void main(String[] args) {
         DepartmentMediator mediator = new DepartmentMediator();
