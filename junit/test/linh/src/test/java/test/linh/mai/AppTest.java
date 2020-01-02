@@ -57,14 +57,19 @@ public class AppTest {
 
     /**
      * Parameterized test with @ValueSource
+     * @ValueSource is an ArgumentsSource which provides access to an array of literal values.
+     * Supported types include: shorts, bytes, ints, longs, floats, doubles, chars, strings, and classes.
+     * 
+     * TestInfo: allows you to get information related to a test suite or test method, such as display name, tags, test class.
+     * TestReporter: is used to print test information to stout or stderr.
      */
     @Tag("Parameterized")
     @DisplayName("Parameterized test with @ValueSource")
-    @ParameterizedTest(name = "run #{index} with argument [{arguments}]")
-    @ValueSource(strings = { "Hello", "JUnit" })
-    public void withValueSource(String word, TestInfo info, TestReporter reporter) {
-        reporter.publishEntry(info.getDisplayName(), "Word: " + word);
-        assertNotNull(word);
+    @ParameterizedTest(name = "Run #{index} with argument [{arguments}]")
+    @ValueSource(floats = { 1.12f, 2.34f })
+    public void withValueSource(Float f, TestInfo info, TestReporter reporter) {
+        reporter.publishEntry(info.getDisplayName(), "Float: " + f);
+        assertNotNull(f);
     }
 
     /**

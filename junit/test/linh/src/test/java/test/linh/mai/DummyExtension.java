@@ -16,6 +16,7 @@ import org.junit.jupiter.params.ParameterizedTest;
  * not make sense or optimal.
  * 
  * @see https://junit.org/junit5/docs/5.0.3/api/org/junit/jupiter/api/extension/package-summary.html
+ * @see https://blog.codefx.org/design/architecture/junit-5-extension-model
  */
 public class DummyExtension implements BeforeAllCallback, BeforeTestExecutionCallback, AfterAllCallback {
 
@@ -23,7 +24,7 @@ public class DummyExtension implements BeforeAllCallback, BeforeTestExecutionCal
 
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
-        System.out.println("====================================================");
+        System.out.println("[Extension]====================================================");
     }
 
     /**
@@ -33,6 +34,14 @@ public class DummyExtension implements BeforeAllCallback, BeforeTestExecutionCal
      * but the display name of the unit test is not shown. This extension checks 
      * for each test run if it has a parent with @ParameterizedTest, if it does
      * then print the parent display name (once).
+     * 
+     * The ExtensionContext interface is an instance of which is passed to every 
+     * extension point’s method. It allows extensions to access information 
+     * regarding the running test and also to interact with the Jupiter machinery.
+     * 
+     * Extensions have to be stateless. Any state they need to maintain has to be 
+     * written to and loaded from the store that the extension context makes 
+     * available. A store is a namespaced, hierarchical, key-value data structure.
      */
     @Override
     public void beforeTestExecution(ExtensionContext context) throws Exception {
@@ -43,16 +52,17 @@ public class DummyExtension implements BeforeAllCallback, BeforeTestExecutionCal
                 context.getParent().ifPresent(parentCtx -> {
                     if (parentCtx.getStore(NAMESPACE).get(parentCtx.getDisplayName()) == null) {
                         parentCtx.getStore(NAMESPACE).put(parentCtx.getDisplayName(), Boolean.TRUE);
-                        System.out.println(parentCtx.getDisplayName());
+                        System.out.println("[Extension] Test: " + parentCtx.getDisplayName());
                     }
                 });
             }
         }
-        System.out.println(context.getDisplayName());
+        
+        System.out.println("[Extension] Test: " + context.getDisplayName()); // test run
     }
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        System.out.println("====================================================");
+        System.out.println("[Extension]====================================================");
     }   
 }

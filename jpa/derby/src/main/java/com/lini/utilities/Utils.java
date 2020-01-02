@@ -34,7 +34,7 @@ public class Utils
     }
 
     /**
-     * Return the initial cause message
+     * Return the initial cause message of a Throwable
      * 
      * @param t
      * @return Initial cause message
@@ -55,8 +55,7 @@ public class Utils
      * @return The causing exception of expected type if found or null
      *         otherwise.
      */
-    public static Throwable getCauseByClass(Throwable t,
-                                            Class<? extends Throwable> cls)
+    public static Throwable getCauseByClass(Throwable t, Class<? extends Throwable> cls)
     {
         while ( t != null )
         {
