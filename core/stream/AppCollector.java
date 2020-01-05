@@ -38,7 +38,7 @@ public class AppCollector {
      * The code converts strings in stream into an ArranyList<String>.
      * ArrayList::new       supplier to instantiate a new ArrayList
      * ArrayList::add       accumulator to add element into result container
-     * ArrayList::addAll    combiner to combine partial results
+     * ArrayList::addAll    combiner to combine partial results (in parallel reduction)
      */
     public void testCollectorSimpler() {
         System.out.println("=====testCollectorSimpler: creating a collector using method reference");

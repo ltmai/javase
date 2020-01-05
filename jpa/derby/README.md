@@ -20,6 +20,9 @@ CALL SYSCS_UTIL.SYSCS_SET_DATABASE_PROPERTY('derby.database.fullAccessUsers', 'J
 ```
 
 This can be verified via Apache Derby ij:
+- Authentication is required
+- John has full access
+- Jane has read-only access
 
 ```batch
 ┌ C:\bin\java_tools\db-derby-10.14.2.0-bin\bin
@@ -37,6 +40,7 @@ ID                  |BIRTHDAY  |FIRST_NAME                      |LAST_NAME
 3                   |1989-10-03|Mickey                          |Mouse
 
 3 Zeilen ausgewählt
+
 ij> update employee set last_name='Doe' where id=3;
 Eine Zeile eingefügt/aktualisiert/gelöscht
 
