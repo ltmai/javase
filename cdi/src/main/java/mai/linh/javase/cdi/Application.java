@@ -14,6 +14,9 @@ public class Application {
     @Inject
     private Service service;
 
+    @Inject 
+    private EggMaker eggMaker;
+
     @PostConstruct
     public void init() {
         System.out.println("Initializing application");
@@ -25,6 +28,6 @@ public class Application {
     }
 
     public String toString() {
-        return "Application : " + service.toString();
+        return "Application : " + service.toString() + " - " + eggMaker.toString();
     }
 }

@@ -1,5 +1,8 @@
 package mai.linh.javase.cdi;
 
+import javax.enterprise.inject.Produces;
+
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 
@@ -16,5 +19,19 @@ public class Main
         Application application = container.select(Application.class).get();
         System.out.println(application.toString());
         container.shutdown();
+    }
+
+    /**
+     * EggMaker producer.
+     * Using Apache Deltaspike {@link BeanProvider#injectFields(Object)} 
+     * to initialize the object created with new.
+     * @see https://deltaspike.apache.org/documentation/core.html 
+     * @return the EggMaker instance
+     */
+    @Produces
+    public EggMaker eggMakerProducer() {
+        EggMaker eggMaker =  new OmeletteMaker();
+        BeanProvider.injectFields(eggMaker);
+        return eggMaker;
     }
 }
