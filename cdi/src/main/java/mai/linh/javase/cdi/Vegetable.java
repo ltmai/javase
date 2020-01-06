@@ -1,6 +1,4 @@
 package mai.linh.javase.cdi;
 
-
-interface Vegetable {
-    
+interface Vegetable {  
 }
