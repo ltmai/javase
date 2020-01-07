@@ -1,4 +1,4 @@
-package test.linh.mai;
+package mai.linh.junit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -15,7 +15,9 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -32,6 +34,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(DummyExtension.class)
+@DisplayNameGeneration(SimpleNameGenerator.class)
 public class AppTest {
 
     private static final String INPUT_STRING = "input";
@@ -67,8 +70,8 @@ public class AppTest {
     @DisplayName("Parameterized test with @ValueSource")
     @ParameterizedTest(name = "Run #{index} with argument [{arguments}]")
     @ValueSource(floats = { 1.12f, 2.34f })
-    public void withValueSource(Float f, TestInfo info, TestReporter reporter) {
-        reporter.publishEntry(info.getDisplayName(), "Float: " + f);
+    public void ParameterizedTest_withValueSource(Float f, TestInfo info, TestReporter reporter) {
+        //reporter.publishEntry(info.getDisplayName());
         assertNotNull(f);
     }
 
@@ -107,7 +110,7 @@ public class AppTest {
      * shell instance of the Class, entirely instrumented to track interactions with
      * it.
      * 
-     * On the other hand, the spy will wrap an existing instance. It will still
+     * On the other hand, the spy will <b>wrap an existing instance</b>. It will still
      * behave in the same way as the normal instance. The only difference is that it
      * will also be instrumented to track all the interactions with it.
      * 
@@ -122,35 +125,61 @@ public class AppTest {
      * doReturn(...) when(...) does not call the method at all.
      */
     @Test
-    public void whenUsingSpy_thenObjectIsSpied() 
+    public void usingMockitoSpy_toWrappAnExistingObject() 
     {
-        List<String> list = new ArrayList<String>();
-        List<String> spyList = Mockito.spy(list);
+        // given
+        List<String> emptyList = new ArrayList<String>();
+        List<String> spyList = Mockito.spy(emptyList);
 
         // The following would result in IndexOutOfBoundsException since
-        // the real method call is made on the list which is empty:
+        // Mockito.when(...).thenReturn(...) makes the real method call 
+        // on the list which is empty:
         // Mockito.when(spyList.get(Mockito.anyInt())).thenReturn(DUMMY_ELEMENT);
         // assertEquals(spyList.get(0), DUMMY_ELEMENT);
+        // Since doReturn(...) when(...) does not call the real method 
+        // we can use it with the spied object (wrapper of an existing one).
 
+        // when
         assertEquals(0, spyList.size());
-        // doReturn(...) when(...) does not call the real method 
         doReturn(DUMMY_ELEMENT).when(spyList).get(Mockito.anyInt());
-        assertEquals(DUMMY_ELEMENT, spyList.get(100));
 
+        // then
+        assertEquals(DUMMY_ELEMENT, spyList.get(100));
         verify(spyList, Mockito.atLeastOnce()).get(Mockito.anyInt());
+    }
+
+    /**
+     * 
+     */
+    @Test
+    public void usingMockitoMock_toCreateMockObject() {
+        // given
+        @SuppressWarnings("rawtypes")
+        List emptyList = Mockito.mock(List.class);
+        // when
+        Mockito.when(emptyList.get(Mockito.anyInt())).thenReturn(DUMMY_ELEMENT);
+        // then
+        assertEquals(DUMMY_ELEMENT, emptyList.get(100));
+        verify(emptyList, Mockito.atLeastOnce()).get(Mockito.anyInt());
     }
 
     /**
      * Use ArgumentCaptor to capture parameters
      */
     @Test
-    public void testCaptor() 
+    public void usingArgumentCaptor_toCaptureMethodParameters() 
     {       
+        // given
         Service serviceMock = Mockito.mock(Service.class);
         serviceMock.toUpper(INPUT_STRING);
-        
+        // when
         verify(serviceMock).toUpper(argumentCaptor.capture());
-        final String capturedArgument = argumentCaptor.getValue();
-        assertThat(capturedArgument, Matchers.equalTo(INPUT_STRING));
+        // then
+        assertThat(argumentCaptor.getValue(), Matchers.equalTo(INPUT_STRING));
     }
+
+    @Disabled("Disabled until bug #12345 is fixed")
+    @Test    
+    public void disabledTest_willNotBeRun() {
+    }    
 }

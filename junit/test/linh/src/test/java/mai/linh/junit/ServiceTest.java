@@ -1,4 +1,4 @@
-package test.linh.mai;
+package mai.linh.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -35,7 +35,7 @@ import org.junit.jupiter.params.provider.CsvSource;
             "               ,abcd               , 5         ,          ",
             "0123456789     ,abcd               ,-1         ,0123456789", 
             "0123456789     ,abcd               ,12         ,0123456789",})
-    public void replaceSubStringAtValidPosition_returnsExpectedResults(String inputString, String replacementString, int position, String expectedResult) {
+    public void whenReplaceSubStringAtValidPosition_thenReturnsExpectedResults(String inputString, String replacementString, int position, String expectedResult) {
         assertEquals(expectedResult, 
                      service.replaceAt(inputString, replacementString, position),
                      () -> "replace " + inputString + " at position " + position + " should return " + expectedResult);
@@ -47,7 +47,7 @@ import org.junit.jupiter.params.provider.CsvSource;
      */
     @Test
     @DisplayName("@Test with expected exception StringIndexOutOfBoundsException")
-    void replaceSubStringAtInvalidPosition_exceptionThrown() {
+    void whenReplaceSubStringAtInvalidPosition_thenExceptionIsThrown() {
         String inputString = "0123456___";
         String replacementString = "6789";
         int idx = inputString.length() - replacementString.length() + 1;

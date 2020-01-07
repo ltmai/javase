@@ -1,4 +1,4 @@
-package test.linh.mai;
+package mai.linh.junit;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -19,9 +19,14 @@ import org.junit.jupiter.params.ParameterizedTest;
  * @see https://blog.codefx.org/design/architecture/junit-5-extension-model
  */
 public class DummyExtension implements BeforeAllCallback, BeforeTestExecutionCallback, AfterAllCallback {
-
+    
     private static final Namespace NAMESPACE = Namespace.create("mai", "linh", "DummyExtension");
-
+    
+    @Override
+    public void beforeAll(ExtensionContext context) throws Exception {
+        System.out.println("[Extension]====================================================");
+    }  
+    
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
         System.out.println("[Extension]====================================================");
@@ -61,8 +66,4 @@ public class DummyExtension implements BeforeAllCallback, BeforeTestExecutionCal
         System.out.println("[Extension] Test: " + context.getDisplayName()); // test run
     }
 
-    @Override
-    public void beforeAll(ExtensionContext context) throws Exception {
-        System.out.println("[Extension]====================================================");
-    }   
 }

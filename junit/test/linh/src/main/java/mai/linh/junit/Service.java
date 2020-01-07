@@ -1,4 +1,4 @@
-package test.linh.mai;
+package mai.linh.junit;
 
 class Service 
 {
