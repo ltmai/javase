@@ -13,13 +13,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 /**
  * ServiceTest
  */
- @ExtendWith(DummyExtension.class)
- public class ServiceTest {
+ @ExtendWith(TestNameExtension.class)
+ public class StringUtilsTest {
 
     /**
      * System Under Test (SUT)
      */
-    private Service service = new Service();
+    private StringUtils utils = new StringUtils();
 
     /**
      * Parameteried test using @CsvSource
@@ -37,7 +37,7 @@ import org.junit.jupiter.params.provider.CsvSource;
             "0123456789     ,abcd               ,12         ,0123456789",})
     public void whenReplaceSubStringAtValidPosition_thenReturnsExpectedResults(String inputString, String replacementString, int position, String expectedResult) {
         assertEquals(expectedResult, 
-                     service.replaceAt(inputString, replacementString, position),
+                     utils.replaceAt(inputString, replacementString, position),
                      () -> "replace " + inputString + " at position " + position + " should return " + expectedResult);
     }
     
@@ -53,7 +53,7 @@ import org.junit.jupiter.params.provider.CsvSource;
         int idx = inputString.length() - replacementString.length() + 1;
 
         Throwable exception = assertThrows(StringIndexOutOfBoundsException.class,
-                () -> service.replaceAt(inputString, replacementString, idx));
+                () -> utils.replaceAt(inputString, replacementString, idx));
         assertEquals("String index out of range: -1", exception.getMessage());
     }
 }

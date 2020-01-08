@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 /**
  * Built-in Junit assertion demo
  */
-@ExtendWith(DummyExtension.class)
+@ExtendWith(TestNameExtension.class)
 @ExtendWith(MockitoExtension.class)
 public class AssertDemo {
 
@@ -34,9 +34,8 @@ public class AssertDemo {
 
     @Test
     void exceptionTesting() {
-        Exception exception = assertThrows(ArithmeticException.class, () -> {
-            throw new ArithmeticException("/ by zero");
-        });
+        Calculator calculator = new Calculator();
+        Exception exception = assertThrows(ArithmeticException.class, () -> { calculator.devide(1, 0); });
         assertEquals("/ by zero", exception.getMessage());
     }
 

@@ -18,7 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest;
  * @see https://junit.org/junit5/docs/5.0.3/api/org/junit/jupiter/api/extension/package-summary.html
  * @see https://blog.codefx.org/design/architecture/junit-5-extension-model
  */
-public class DummyExtension implements BeforeAllCallback, BeforeTestExecutionCallback, AfterAllCallback {
+public class TestNameExtension implements BeforeAllCallback, BeforeTestExecutionCallback, AfterAllCallback {
     
     private static final Namespace NAMESPACE = Namespace.create("mai", "linh", "DummyExtension");
     

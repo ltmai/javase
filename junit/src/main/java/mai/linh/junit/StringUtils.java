@@ -1,12 +1,7 @@
 package mai.linh.junit;
 
-class Service 
-{
-    public String toUpper(String s) 
-    {
-        return s.toUpperCase();
-    } 
-    
+public class StringUtils 
+{  
 	/**
 	 * Replaces substring by another string (with the same length) at given index.
 	 * 

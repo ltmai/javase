@@ -1,13 +1,13 @@
 package mai.linh.junit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,25 +27,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-@ExtendWith(DummyExtension.class)
+@ExtendWith(TestNameExtension.class)
 @DisplayNameGeneration(SimpleNameGenerator.class)
-public class AppTest {
+public class JUnit5Demo {
 
     private static final String INPUT_STRING = "input";
-    private static final String INPUT_UPPERCASE = "INPUT";
     private static final String DUMMY_ELEMENT = "dummy";
 
     @Mock
-    private Service serviceMock;
-
-    @InjectMocks
-    private App app;
+    private StringUtils utilsMock;
 
     @Captor
     private ArgumentCaptor<String> argumentCaptor;
@@ -71,7 +66,6 @@ public class AppTest {
     @ParameterizedTest(name = "Run #{index} with argument [{arguments}]")
     @ValueSource(floats = { 1.12f, 2.34f })
     public void ParameterizedTest_withValueSource(Float f, TestInfo info, TestReporter reporter) {
-        //reporter.publishEntry(info.getDisplayName());
         assertNotNull(f);
     }
 
@@ -81,27 +75,11 @@ public class AppTest {
     @Test
     @DisplayName("Assumme precondition before executing test")
     void whenPreconditionNotSatisfied_TestWillNotContinue() {
-        boolean preconditionSatisfied = (2 > 1);
+        boolean preconditionSatisfied = (1 > 2);
         assumeTrue(preconditionSatisfied);
 
         // the folowing will not be executed at all if the precondition is not satisfied
         System.out.println("Pre-condition satisfied, continue with test");
-        assertAll(() -> assertEquals(1, 1, "1 is not equal to 1"));
-    }
-
-    /**
-     * Simple test with Mock object
-     */
-    @Test
-    @DisplayName("Simple test with Mock object")
-    void whenServiceToUpper_thenCorrectResult() {
-        when(serviceMock.toUpper(INPUT_STRING)).thenReturn(INPUT_STRING.toUpperCase());
-
-        String output = app.toUpper( INPUT_STRING);
-        assertEquals(INPUT_UPPERCASE, output);
-
-        // verify that the method was called
-        verify(serviceMock).toUpper(Mockito.anyString());
     }
 
     /**
@@ -139,7 +117,6 @@ public class AppTest {
         // Since doReturn(...) when(...) does not call the real method 
         // we can use it with the spied object (wrapper of an existing one).
 
-        // when
         assertEquals(0, spyList.size());
         doReturn(DUMMY_ELEMENT).when(spyList).get(Mockito.anyInt());
 
@@ -170,11 +147,11 @@ public class AppTest {
     public void usingArgumentCaptor_toCaptureMethodParameters() 
     {       
         // given
-        Service serviceMock = Mockito.mock(Service.class);
-        serviceMock.toUpper(INPUT_STRING);
+        StringUtils serviceMock = Mockito.mock(StringUtils.class);
         // when
-        verify(serviceMock).toUpper(argumentCaptor.capture());
+        serviceMock.replaceAt(INPUT_STRING, "replacement", 0);
         // then
+        verify(serviceMock).replaceAt(argumentCaptor.capture(), anyString(), anyInt());
         assertThat(argumentCaptor.getValue(), Matchers.equalTo(INPUT_STRING));
     }
 
