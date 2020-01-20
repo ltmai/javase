@@ -24,8 +24,8 @@ public class MockitoDemo {
      */
     @Test
     public void stubbingMethodsWithExceptions() {
-        Calculator calculator = Mockito.mock(Calculator.class);
         // given
+        Calculator calculator = Mockito.mock(Calculator.class);
         // alternatively: doThrow(ArithmeticException.class).when(calculator.devide(anyInt(), anyInt()));        
         given(calculator.devide(anyInt(), eq(0))).willThrow(new ArithmeticException());
         // then   
@@ -35,8 +35,8 @@ public class MockitoDemo {
     @Test
     public void behaviorDrivenDevelopmentStyle() {
         @SuppressWarnings("rawtypes")
-        List list = Mockito.mock(List.class);
         // given
+        List list = Mockito.mock(List.class);
         given(list.size()).willReturn(100);
         // then
         then(list.size()).isEqualTo(100);

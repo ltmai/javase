@@ -64,8 +64,15 @@
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <version>1.4.200</version>
-      <scope>test</scope>
-  </dependency>        
+      <scope>test</scope>      
+  </dependency>
+<!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-jaxrs -->
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-jaxrs</artifactId>
+    <version>3.9.0.Final</version>
+</dependency>
+  
   </dependencies>
 
   <build>

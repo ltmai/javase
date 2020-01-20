@@ -61,7 +61,7 @@ public class AssertDemo {
 
     @Test
     void timeoutExceededWithPreemptiveTermination() {
-        assertTimeoutPreemptively(ofMillis(10), () -> {
+        assertTimeoutPreemptively(ofMillis(20), () -> {
             Thread.sleep(10);
         });
     }
