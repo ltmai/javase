@@ -16,10 +16,6 @@ public class PersonRepository {
      * @param em
      */
     public PersonRepository(EntityManager em) {
-        if (em == null)
-            System.out.println("@InjectMocks NULL");
-        else
-            System.out.println("@InjectMocks");
         this.em = em;
     }
 
