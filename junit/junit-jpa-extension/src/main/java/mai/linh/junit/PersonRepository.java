@@ -1,5 +1,7 @@
 package mai.linh.junit;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -25,5 +27,11 @@ public class PersonRepository {
 
     public Person findPersonById(Long id) {
         return em.find(Person.class, id);
+    }
+
+    public List<Person> findPersonByLastName(String lastName) {
+        return em.createQuery("SELECT p FROM Person p WHERE p.lastName = :lastName", Person.class)
+                 .setParameter("lastName", lastName)
+                 .getResultList();
     }
 }

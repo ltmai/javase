@@ -1,8 +1,10 @@
 package mai.linh.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -34,7 +36,7 @@ public class JpaUnitTest {
      * Persistence Unit Test
      */
     @Test
-    public void jpaUnitTest() {
+    public void existingPersonCanBeFound() {
         // given
         Person charlie = new Person();
         charlie.setId(1889L);
@@ -46,5 +48,14 @@ public class JpaUnitTest {
         // then
         Person found = personRepository.findPersonById(1889L);
         assertEquals("Charlie", found.getFirstName(), "Newly added entity cannot be found");
+    }
+
+    @Test
+    public void nonExistingPersonCannotBeFound() {
+        // given
+        // when
+        List<Person> found = personRepository.findPersonByLastName("Chaplin");        
+        // then
+        assertTrue(found.isEmpty());
     }
 }
