@@ -6,6 +6,9 @@ import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 
+import mai.linh.javase.cdi.eggmaker.EggMaker;
+import mai.linh.javase.cdi.eggmaker.OmeletteMaker;
+
 /**
  * Hello world!
  *
@@ -22,7 +25,7 @@ public class Main
     }
 
     /**
-     * EggMaker producer.
+     * EggMaker producer method.
      * Using Apache Deltaspike {@link BeanProvider#injectFields(Object)} 
      * to initialize the object created with new.
      * @see https://deltaspike.apache.org/documentation/core.html 

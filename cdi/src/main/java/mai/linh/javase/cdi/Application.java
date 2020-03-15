@@ -5,6 +5,9 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import mai.linh.javase.cdi.eggmaker.EggMaker;
+import mai.linh.javase.cdi.service.Service;
+
 /**
  * Application
  */

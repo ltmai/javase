@@ -1,4 +1,4 @@
-package mai.linh.javase.cdi;
+package mai.linh.javase.cdi.eggmaker;
 
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
