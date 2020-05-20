@@ -52,6 +52,11 @@
 				</configuration>
 			</plugin>
 
+            <!-- using maven-dependency-plugin and maven-jar-plugin allows us to run the output .jar file in target folder directly: 
+                The maven-dependency-plugin copies the dependencies to path configured with <ouputDirectory>.
+                The maven-jar-plugin configures META-INF\MANIFEST.MF to set prefix lib/ to dependencies.
+                With these settings we can run: java -jar target\example.log4j2.jar -->
+            
 			<!-- dependency plugin: see https://maven.apache.org/plugins/maven-dependency-plugin/copy-dependencies-mojo.html -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
