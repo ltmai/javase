@@ -6,6 +6,11 @@
     <!-- put your entity classes here to register to the entity manager -->
     <class>mai.linh.junit.Person</class>
     <properties>
+      <!--drop and recreate database objects on deployment (for testing purposes)-->
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+      <property name="javax.persistence.schema-generation.create-source" value="metadata" />
+      <property name="javax.persistence.schema-generation.drop-source" value="metadata" />
+      <property name="javax.persistence.sql-load-script-source" value="META-INF/init-data.sql" />      
     </properties>
   </persistence-unit>
 </persistence>

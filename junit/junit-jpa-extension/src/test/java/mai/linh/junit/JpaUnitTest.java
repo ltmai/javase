@@ -1,6 +1,7 @@
 package mai.linh.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
@@ -36,7 +37,7 @@ public class JpaUnitTest {
      * Persistence Unit Test
      */
     @Test
-    public void existingPersonCanBeFound() {
+    public void newlyAddedPersonCanBeFound() {
         // given
         Person charlie = new Person();
         charlie.setId(1889L);
@@ -58,4 +59,13 @@ public class JpaUnitTest {
         // then
         assertTrue(found.isEmpty());
     }
+
+    @Test
+    public void existingPersonCanBeFound() {
+        // given
+        // when
+        List<Person> found = personRepository.findPersonByLastName("Einstein");        
+        // then
+        assertFalse(found.isEmpty());
+    }    
 }
