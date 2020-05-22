@@ -2,7 +2,6 @@ package mai.linh.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
 import java.util.List;
@@ -14,6 +13,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import mai.linh.junit.extension.JpaUnitTestEm;
+import mai.linh.junit.extension.JpaUnitTestExtension;
 
 /**
  * JPA unit test
@@ -33,11 +35,18 @@ public class JpaUnitTest {
     @InjectMocks
     private PersonRepository personRepository;
 
-    /**
-     * Persistence Unit Test
-     */
     @Test
-    public void newlyAddedPersonCanBeFound() {
+    public void whenPersonExists_thenHeCanBeFound() {
+        // given
+        // Person 'Einstein' was created in init-data.sql
+        // when
+        List<Person> found = personRepository.findPersonByLastName("Einstein");        
+        // then
+        assertFalse(found.isEmpty());
+    }  
+
+    @Test
+    public void whenAddingPerson_thenNewPersonCreated() {
         // given
         Person charlie = new Person();
         charlie.setId(1889L);
@@ -46,26 +55,10 @@ public class JpaUnitTest {
         charlie.setDateOfBirth(Date.valueOf("1889-04-16"));        
         // when
         personRepository.createPerson(charlie);
-        // then
         Person found = personRepository.findPersonById(1889L);
+        // then
         assertEquals("Charlie", found.getFirstName(), "Newly added entity cannot be found");
     }
 
-    @Test
-    public void nonExistingPersonCannotBeFound() {
-        // given
-        // when
-        List<Person> found = personRepository.findPersonByLastName("Chaplin");        
-        // then
-        assertTrue(found.isEmpty());
-    }
-
-    @Test
-    public void existingPersonCanBeFound() {
-        // given
-        // when
-        List<Person> found = personRepository.findPersonByLastName("Einstein");        
-        // then
-        assertFalse(found.isEmpty());
-    }    
+  
 }

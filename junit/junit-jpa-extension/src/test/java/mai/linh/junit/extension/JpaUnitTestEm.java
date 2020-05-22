@@ -1,10 +1,13 @@
-package mai.linh.junit;
+package mai.linh.junit.extension;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * @author https://github.com/ltmai
+ */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JpaUnitTestEm

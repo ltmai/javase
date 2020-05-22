@@ -1,4 +1,4 @@
-package mai.linh.junit;
+package mai.linh.junit.extension;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 /**
- * JpaUnitTestExtension
+ * @author https://github.com/ltmai
  */
 public class JpaUnitTestExtension
         implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
