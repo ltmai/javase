@@ -1,10 +1,10 @@
 package mai.linh.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Date;
-import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 
@@ -40,22 +40,21 @@ public class JpaUnitTest {
         // given
         // Person 'Einstein' was created in init-data.sql
         // when
-        List<Person> found = personRepository.findPersonByLastName("Einstein");        
+        Optional<Person> einstein = personRepository.findPersonByLastName("Einstein").findFirst();
         // then
-        assertFalse(found.isEmpty());
+        assertTrue(einstein.isPresent());
     }  
 
     @Test
     public void whenAddingPerson_thenNewPersonCreated() {
         // given
         Person charlie = new Person();
-        charlie.setId(1889L);
         charlie.setFirstName("Charlie");
         charlie.setLastName("Chaplin");
         charlie.setDateOfBirth(Date.valueOf("1889-04-16"));        
         // when
         personRepository.createPerson(charlie);
-        Person found = personRepository.findPersonById(1889L);
+        Person found = personRepository.findPersonByLastName(charlie.getLastName()).findFirst().get();
         // then
         assertEquals("Charlie", found.getFirstName(), "Newly added entity cannot be found");
     }
