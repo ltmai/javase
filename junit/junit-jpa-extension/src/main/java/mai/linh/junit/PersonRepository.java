@@ -5,6 +5,8 @@ import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import mai.linh.junit.person.Person;
+
 /**
  * PersonRepository
  */

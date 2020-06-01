@@ -1,4 +1,4 @@
-package mai.linh.junit;
+package mai.linh.junit.person;
 
 import java.sql.Date;
 

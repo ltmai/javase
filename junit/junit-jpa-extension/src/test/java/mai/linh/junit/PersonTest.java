@@ -14,22 +14,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import mai.linh.junit.extension.JpaUnitTestEm;
-import mai.linh.junit.extension.JpaUnitTestExtension;
+import mai.linh.junit.extension.JpaJUnitEm;
+import mai.linh.junit.extension.JpaJUnitExtension;
+import mai.linh.junit.extension.TestNameExtension;
+import mai.linh.junit.person.Person;
 
-/**
- * JPA unit test
- * The following is necessary for JPA unit test:
- * 1. Annotate test class with @ExtendWith(JpaUnitTestExtension.class)
- * 2. A public EntityManager field annotated with @JpaUnitTest and @Spy
- * 3. The entity classes must be provided in test\resources\META-INF\persistence.xml
- */
-@ExtendWith(JpaUnitTestExtension.class)
+@ExtendWith(JpaJUnitExtension.class)
 @ExtendWith(MockitoExtension.class)
-public class JpaUnitTest {
+@ExtendWith(TestNameExtension.class)
+public class PersonTest {
 
     @Spy
-    @JpaUnitTestEm
+    @JpaJUnitEm
     public EntityManager em;
 
     @InjectMocks
@@ -43,7 +39,7 @@ public class JpaUnitTest {
         Optional<Person> einstein = personRepository.findPersonByLastName("Einstein").findFirst();
         // then
         assertTrue(einstein.isPresent());
-    }  
+    }
 
     @Test
     public void whenAddingPerson_thenNewPersonCreated() {
@@ -58,6 +54,4 @@ public class JpaUnitTest {
         // then
         assertEquals("Charlie", found.getFirstName(), "Newly added entity cannot be found");
     }
-
-  
 }
