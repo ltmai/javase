@@ -26,7 +26,7 @@ public class OrderRepository {
     }
 
 	public Stream<Order> findOrderByCustomer(String customer) {
-        return em.createQuery("SELECT o FROM Order o WHERE customer = :customer", Order.class)
+        return em.createQuery("SELECT o FROM Order o WHERE o.customer = :customer", Order.class)
                  .setParameter("customer", customer) 
                  .getResultStream();
 	}

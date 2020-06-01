@@ -29,7 +29,7 @@ public class OrderTest {
     // It would be prefect if we could do:
     //
     // @Spy
-    // @JpaUnitTestEm
+    // @JpaJUnitEm
     // public EntityManager em;
     //
     // @InjectMocks
