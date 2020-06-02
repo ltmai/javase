@@ -50,10 +50,10 @@ public class TestNameExtension implements BeforeAllCallback, BeforeTestExecution
      */
     @Override
     public void beforeTestExecution(ExtensionContext context) throws Exception {
-        List<? extends Object> filter = Arrays.asList(ParameterizedTest.class);
+        List<? extends Object> annotationFilter = Arrays.asList(ParameterizedTest.class);
 
         for (Annotation annotation : context.getElement().get().getAnnotations()) {
-            if (filter.contains(annotation.annotationType())) {
+            if (annotationFilter.contains(annotation.annotationType())) {
                 context.getParent().ifPresent(parentCtx -> {
                     if (parentCtx.getStore(NAMESPACE).get(parentCtx.getDisplayName()) == null) {
                         parentCtx.getStore(NAMESPACE).put(parentCtx.getDisplayName(), Boolean.TRUE);

@@ -35,8 +35,7 @@ public class MockitoDemo {
         // given
         Calculator calculator = Mockito.mock(Calculator.class);
         // alternatively:
-        // doThrow(ArithmeticException.class).when(calculator.devide(anyInt(),
-        // anyInt()));
+        // doThrow(ArithmeticException.class).when(calculator.devide(anyInt(), anyInt()));
         given(calculator.devide(anyInt(), eq(0))).willThrow(new ArithmeticException());
         // then
         assertThrows(ArithmeticException.class, () -> {
