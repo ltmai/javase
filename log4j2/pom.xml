@@ -46,56 +46,56 @@
         </configuration>
       </plugin>
 
-      <!-- using maven-dependency-plugin and maven-jar-plugin allows us to run the output .jar file in target folder directly: 
-        The maven-dependency-plugin copies the dependencies to path configured with <ouputDirectory>.
-        The maven-jar-plugin configures META-INF\MANIFEST.MF to set prefix lib/ to dependencies.
-        With these settings we can run: java -jar target\example.log4j2.jar -->
-
-      <!-- dependency plugin: see https://maven.apache.org/plugins/maven-dependency-plugin/copy-dependencies-mojo.html -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target\lib</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-						</configuration>
-					</execution>
-				</executions>
+    <!-- using maven-dependency-plugin and maven-jar-plugin allows us to run the output .jar file in target folder directly: 
+      The maven-dependency-plugin copies the dependencies to path configured with <ouputDirectory>.
+      The maven-jar-plugin configures META-INF\MANIFEST.MF to set prefix lib/ to dependencies.
+      With these settings we can run: java -jar target\example.log4j2.jar -->
+  
+    <!-- dependency plugin: see https://maven.apache.org/plugins/maven-dependency-plugin/copy-dependencies-mojo.html -->
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+            <execution>
+                <id>copy-dependencies</id>
+                <phase>prepare-package</phase>
+                <goals>
+                    <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                    <outputDirectory>target\lib</outputDirectory>
+                    <overWriteReleases>false</overWriteReleases>
+                    <overWriteSnapshots>false</overWriteSnapshots>
+                    <overWriteIfNewer>true</overWriteIfNewer>
+                </configuration>
+            </execution>       
+        </executions>
       </plugin>           
       <!--  packaging plugin: see https://maven.apache.org/components/plugins/maven-jar-plugin/jar-mojo.html --> 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<finalName>${project.name}</finalName>
-					<archive>
-						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-						<manifest>
-							<!--add lib/* to classpath-->
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib</classpathPrefix>
-							<mainClass>com.linhmai.example.log4j2.App</mainClass>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-						</manifest>
-						<!-- additional manifest entries -->
-						<manifestEntries>
-							<URL>http://lini.com</URL>
-							<Implementation-Vendor>BIGINT</Implementation-Vendor>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>      
+      <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.6</version>
+          <configuration>
+              <finalName>${project.name}</finalName>
+              <archive>
+                  <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+                  <manifest>
+                      <!--add lib/* to classpath-->
+                      <addClasspath>true</addClasspath>
+                      <classpathPrefix>lib</classpathPrefix>
+                      <mainClass>com.linhmai.example.log4j2.App</mainClass>
+                      <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                      <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                  </manifest>
+                  <!-- additional manifest entries -->
+                  <manifestEntries>
+                      <URL>http://lini.com</URL>
+                      <Implementation-Vendor>BIGINT</Implementation-Vendor>
+                  </manifestEntries>
+              </archive>
+          </configuration>
+      </plugin>      
     </plugins>
   </build>
     
