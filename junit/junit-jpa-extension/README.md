@@ -38,7 +38,7 @@ code under test, the `PersonRepository` class as in this case.
 Now if you change the query in method `findPersonByLastName` and make a typo there, the unit test will fail so you
 can detect the bug right in your unit tests.
 
-# Limittations
+# Limitations
 
 For each test class, it creates an EntityManagerFactory to provide connections to an in memory database. This is 
 done by registering to JUnit extension points via callbacks. It would be perfect if you could do this once for a 
