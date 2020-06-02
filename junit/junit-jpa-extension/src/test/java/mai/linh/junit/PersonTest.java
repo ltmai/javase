@@ -34,7 +34,6 @@ public class PersonTest {
     @Test
     public void whenPersonExists_thenHeCanBeFound() {
         // given
-        // Person 'Einstein' was created in init-data.sql
         // when
         Optional<Person> einstein = personRepository.findPersonByLastName("Einstein").findFirst();
         // then

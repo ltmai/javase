@@ -1,5 +1,7 @@
 package mai.linh.junit.extension;
 
+import java.lang.reflect.Field;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,8 +57,12 @@ public class JpaJUnitExtension
     }
 
     private void injectEntityManagerIntoTestInstance(Object testInstance, EntityManager em) throws IllegalAccessException {
-        AnnotationSupport.findPublicAnnotatedFields(testInstance.getClass(), EntityManager.class, JpaJUnitEm.class)
-                         .get(0).set(testInstance, em);
+        List<Field> fields = AnnotationSupport.findPublicAnnotatedFields(testInstance.getClass(), EntityManager.class, JpaJUnitEm.class);
+        if (fields.isEmpty()) {
+            throw new RuntimeException("A public field annotated with @JpaJUnitEm is required by JPA JUnit extension");
+        } else {
+            fields.get(0).set(testInstance, em);
+        }
     }
 
     @Override

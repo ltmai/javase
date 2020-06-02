@@ -16,7 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 
 @Entity
-@Cacheable(value = false)
+@Cacheable(false)
 public class Journal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

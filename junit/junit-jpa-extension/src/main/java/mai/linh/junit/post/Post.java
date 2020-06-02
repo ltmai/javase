@@ -27,7 +27,7 @@ public class Post {
     private String title;
  
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<PostComment> comments = new ArrayList<PostComment>();
+    private List<Comment> comments = new ArrayList<Comment>();
 
     public Post() {
     }
@@ -36,12 +36,14 @@ public class Post {
         this.title = title;
     }
  
-    public void addComment(PostComment comment) {
-        comments.add(comment);
-        comment.setPost(this);
+    public void addComment(Comment... comments) {
+        for (Comment comment : comments) {
+            this.comments.add(comment);
+            comment.setPost(this);
+        }
     }
  
-    public void removeComment(PostComment comment) {
+    public void removeComment(Comment comment) {
         comments.remove(comment);
         comment.setPost(null);
     }
@@ -62,11 +64,11 @@ public class Post {
         this.title = title;
     }
 
-    public List<PostComment> getComments() {
+    public List<Comment> getComments() {
         return this.comments;
     }
 
-    public void setComments(List<PostComment> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments.clear();
         this.comments.addAll(comments);
     }
@@ -76,7 +78,7 @@ public class Post {
         return "Post [" +
             " id = " + id +  
             ", title = '" + title + "'" +   
-            ", comments = { " + String.join("; ", comments.stream().map(PostComment::getReview).map(s -> "'" + s + "'").collect(Collectors.toList())) + " } " +  
+            ", comments = { " + String.join("; ", comments.stream().map(Comment::getReview).map(s -> "'" + s + "'").collect(Collectors.toList())) + " } " +  
             "]"; 
     }
 }

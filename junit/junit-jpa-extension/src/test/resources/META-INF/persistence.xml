@@ -9,7 +9,7 @@
     <class>mai.linh.junit.order.Item</class>
     <class>mai.linh.junit.order.Order</class>
     <class>mai.linh.junit.post.Post</class>
-    <class>mai.linh.junit.post.PostComment</class>
+    <class>mai.linh.junit.post.Comment</class>
     <class>mai.linh.junit.journal.Journal</class>
     <class>mai.linh.junit.journal.JournalParam</class>
     <properties>

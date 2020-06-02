@@ -11,13 +11,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "post_comment")
+@Table(name = "comment")
 @Cacheable(false)
-public class PostComment {
+public class Comment {
  
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_post_comment")
-    @SequenceGenerator(name = "seq_post_comment", initialValue = 100, allocationSize = 5)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_comment")
+    @SequenceGenerator(name = "seq_comment", initialValue = 100, allocationSize = 5)
     private Long id;
  
     private String review;
@@ -26,10 +26,10 @@ public class PostComment {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public PostComment() {
+    public Comment() {
     }
 
-    public PostComment(String review) {
+    public Comment(String review) {
         this.review = review;
     }
  
@@ -75,7 +75,7 @@ public class PostComment {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        PostComment other = (PostComment) obj;
+        Comment other = (Comment) obj;
         if (post == null) {
             if (other.post != null)
                 return false;

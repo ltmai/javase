@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 
 @Entity
-@Cacheable(value = false)
+@Cacheable(false)
 @IdClass(JournalParamPk.class)
 public class JournalParam {
 

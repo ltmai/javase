@@ -1,6 +1,8 @@
 package mai.linh.junit;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -25,6 +27,10 @@ import mai.linh.junit.order.Order;
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(TestNameExtension.class)
 public class OrderTest {
+
+    private static final String CUSTOMER_NEW = "Customer";
+
+    private static final String CUSTOMER_DB = "Customer1";
 
     // It would be prefect if we could do:
     //
@@ -59,19 +65,38 @@ public class OrderTest {
     public void beforeAll() {
         orderRepository = new OrderRepository(em);
     }
+
+    @Test
+    public void whenOrderExists_thenItCanBeFound() {
+        // given
+        // when
+        Order order = orderRepository.findOrderByCustomer(CUSTOMER_DB).findFirst().get();
+        // then
+        assertAll(
+            ()->assertEquals(CUSTOMER_DB, order.getCustomer()),
+            ()->assertEquals(2, order.getItems().size()),
+            ()->assertEquals("HP Desktop PC", order.getItems().get(1L).getArticle()),
+            ()->assertEquals("HP 14 Monitor", order.getItems().get(2L).getArticle())
+        );
+    }
         
     @Test
     public void whenAddingOrder_thenNewOrderCreated() {
         // given
-        Order order = Order.of("Customer", Calendar.getInstance().getTime(), "New");
+        Order order = Order.of(CUSTOMER_NEW, Calendar.getInstance().getTime(), "New");
         Item item1 = Item.of(1L, "Article 1", 2L, 100L);
         Item item2 = Item.of(2L, "Article 2", 1L, 300L);
         Map<Long, Item> items = Stream.of(item1, item2).collect(Collectors.toMap(Item::getPosition, Function.identity()));
         // when
         orderRepository.persist(order, items);
         // then
-        order = orderRepository.findOrderByCustomer("Customer").findFirst().get();
-        assertEquals("Customer", order.getCustomer());
-        assertEquals(2, order.getItems().size());
+        Order dbOrder = orderRepository.findOrderByCustomer(CUSTOMER_NEW).findFirst().get();
+
+        assertAll(
+            ()->assertEquals(CUSTOMER_NEW, dbOrder.getCustomer()),
+            ()->assertEquals(2, dbOrder.getItems().size()),
+            ()->assertTrue(dbOrder.getItems().values().contains(item1)),    
+            ()->assertTrue(dbOrder.getItems().values().contains(item2))    
+        );
     }
 }

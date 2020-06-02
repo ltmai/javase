@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="RETAIL_ORDER")
-@Cacheable(value = false)
+@Cacheable(false)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ORDER_ID")

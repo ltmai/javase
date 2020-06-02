@@ -35,9 +35,9 @@ public class JournalTest {
     @Test
     public void whenJournalExists_thenItCanBeFound() {
         // given
+        // when
         Journal journalHuman = journalRepository.getJournalByCategory("HUMAN").findFirst().get();
         Journal journalMachine = journalRepository.getJournalByCategory("MACHINE").findFirst().get();
-        // when
         // then
         assertEquals("Message with one parameter FIRST", journalHuman.toString());
         assertEquals("Message with two parameters FIRST and SECOND", journalMachine.toString());
