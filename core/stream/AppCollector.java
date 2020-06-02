@@ -27,7 +27,7 @@ public class AppCollector {
          System.out.println("collect elements greater than 3 into a set of Integers");
          List<Integer> list = new ArrayList<>(Arrays.asList(1, 1, 2, 3, 4, 4, 5, 6, 7, 7, 8, 9));
          HashSet<Integer> result = list.stream().collect(
-                 ()->new HashSet<>(),
+                 HashSet::new,
                  (c, e)->{ if (e > 3) c.add(e); },
                  HashSet::addAll);
          result.stream().forEach(System.out::println);
@@ -101,12 +101,12 @@ public class AppCollector {
 
     public static void main(String[] args) {
         AppCollector app = new AppCollector();
-        app.testCollectorSimple();
+        // app.testCollectorSimple();
         app.testCollectorSimpler();
-        app.testCollectingAndThen();
-        app.testGroupingBy();
-        app.testGroupingByConcurrent();
-        app.testMapping();
-        app.testPartioningBy();
+        // app.testCollectingAndThen();
+        // app.testGroupingBy();
+        // app.testGroupingByConcurrent();
+        // app.testMapping();
+        // app.testPartioningBy();
     }
 }

@@ -15,8 +15,8 @@ import java.security.SecureRandom;
  * 
  * Interface HashStrategy: The abstraction of hashing strategies. 
  * 
- * Class Md5Strategy, Sha256Strategy: two concrete implementation
- * of HashStrategy.
+ * Class Md5Strategy, Sha256Strategy: concrete implementations of
+ * HashStrategy.
  * 
  * Class Context: holds the current strategy and lets you alter
  * the object's behavior at run-time.
