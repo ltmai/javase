@@ -1,7 +1,7 @@
 Using log4j2 in Java project
 ---
 
-Configuration file log4j2.xml should be found in classpath or provide as a parameter.
+Configuration file log4j2.xml should be found in classpath or provided as a parameter.
 
 # To run the output executable:
 
