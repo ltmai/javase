@@ -32,7 +32,7 @@ public class SingletonLazy {
          * an instance of Singleton is created.
          */
         private Singleton() {
-            System.out.println("Create a instance of Singleton");
+            System.out.println("Constructor: create a instance of Singleton");
         }
 
         public void hello() {

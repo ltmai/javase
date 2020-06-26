@@ -25,27 +25,68 @@ import java.util.Map;
 public class InterpreterPattern {
 
     static class Interpreter {
+
+        /**
+         * Functional interface: whose instances are to be evaluated/interpreted/executed
+         * For an input: w x z - + as in this example, the following anstract syntax tree
+         * is built:
+         * 
+         *   Expr.plus(Expr.variable(w), Expr.minus(Expr.variable(x), Expr.variable(z)))
+         */
         @FunctionalInterface
         public interface Expr {
+            /**
+             * The abstract functional method of Expr type, that starts the evaluation
+             * of an Expr instance.
+             * 
+             * @param context
+             * @return
+             */
             int interpret(Map<String, Integer> context);
 
-            static Expr number(int number) {
-                return context -> number;
-            }
-
+            /**
+             * creates an instance of Expr, evaluated by applying operator (+) to the 
+             * evaluated Expr parameters 
+             * @param left
+             * @param right
+             * @return
+             */
             static Expr plus(Expr left, Expr right) {
                 return context -> left.interpret(context) + right.interpret(context);
             }
 
+            /**
+             * creates an instance of Expr, evaluated by applying operator (-) to the 
+             * evaluated Expr parameters
+             * 
+             * @param left
+             * @param right
+             * @return
+             */
             static Expr minus(Expr left, Expr right) {
                 return context -> left.interpret(context) - right.interpret(context);
             }
 
-            static Expr variable(String name) {
-                return context -> context.getOrDefault(name, 0);
+            /**
+             * creates an instance of Expr parameterized by variable 'v', that can be 
+             * evaluated as: Expr(v) = ctx) => { ctx.getOrDefault(v, 0)
+             * 
+             * @param v
+             * @return
+             */
+            static Expr variable(String v) {
+                return context -> context.getOrDefault(v, 0);
             }
         }
 
+        /**
+         * Parses the input token using the current processing stack, the result is a
+         * new instance of Expr created either from this token or from existing Exprs
+         * on the stack.
+         * @param token: input token to be parse
+         * @param stack: input stack containing intermediate Expr during parsing process
+         * @return an new instance of Expr
+         */
         private static Expr parseToken(String token, ArrayDeque<Expr> stack) {
             Expr left, right;
 
@@ -63,6 +104,11 @@ public class InterpreterPattern {
             }
         }
 
+        /**
+         * Builds an abstract syntax tree (Expr) from input expression
+         * @param expression
+         * @return
+         */
         public static Expr parse(String expression) {
             ArrayDeque<Expr> stack = new ArrayDeque<Expr>();
 
@@ -75,12 +121,14 @@ public class InterpreterPattern {
 
     public static void main(String[] args) {
         Interpreter.Expr expr = Interpreter.parse("w x z - +");
-        // Map<String, Integer> context = Map.of("w", 5, "x", 10, "z", 42);
+
+        // Java 9: Map<String, Integer> context = Map.of("w", 5, "x", 10, "z", 42);
         Map<String, Integer> context = new HashMap<String, Integer>();
         context.put("w", 05);
         context.put("x", 10);
         context.put("z", 42);
 
+        // expected result = 5 + 10 - 42 = -27 
         int result = expr.interpret(context);
         System.out.println(result);
     }
