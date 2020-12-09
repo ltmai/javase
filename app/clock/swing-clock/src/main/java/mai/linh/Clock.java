@@ -8,8 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
@@ -62,18 +60,15 @@ public class Clock extends JFrame {
 	public static void main(String[] args) {
 		/* invokeLater() allows us to post a "job" to Swing, which it will 
 		 * then run on the event dispatch thread at its next convenience */
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Clock clock = new Clock();
-					Utilities.setFrameLocationCenter(clock);
-					clock.start();
-					clock.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		EventQueue.invokeLater(() -> {
+			try {
+				Clock clock = new Clock();
+				Utilities.setFrameLocationCenter(clock);
+				clock.start();
+				clock.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}});
 	}	
 	
 	public class ClockPanel extends JPanel {
@@ -129,11 +124,11 @@ public class Clock extends JFrame {
 			
 			for (int i = 1; i <= 12; i ++) {
 				TextLayout tl = new TextLayout(Integer.toString(i), getFont(), g2d.getFontRenderContext());
-			      Rectangle2D bb = tl.getBounds();
-			      double angle = (i * (360/12) - 90) / RADIAN;
-			      double x = (CLOCK_RADIUS + 10) * Math.cos(angle) - bb.getCenterX() / 2;
-			      double y = (CLOCK_RADIUS + 10) * Math.sin(angle) - bb.getCenterY() / 2;
-			      tl.draw(g2d, (float)(cx + x), (float)(cy + y));				
+				Rectangle2D bb = tl.getBounds();
+				double angle = (i * (360/12) - 90) / RADIAN;
+				double x = (CLOCK_RADIUS + 10) * Math.cos(angle) - bb.getCenterX() / 2;
+				double y = (CLOCK_RADIUS + 10) * Math.sin(angle) - bb.getCenterY() / 2;
+				tl.draw(g2d, (float)(cx + x), (float)(cy + y));				
 			}
 		}
 
@@ -221,11 +216,7 @@ public class Clock extends JFrame {
 		clockPanel = new ClockPanel();
 		setContentPane(clockPanel);
 		
-		timer = new Timer(1000, new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										update();
-									}
-								});
+		timer = new Timer(1000, e -> { update(); });
 		Runtime.getRuntime().gc();
 	}
 	

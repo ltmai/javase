@@ -33,6 +33,7 @@ public class Main
      */
     @Produces
     public EggMaker eggMakerProducer() {
+        System.out.println("Creating EggMaker with Producer method");
         EggMaker eggMaker =  new OmeletteMaker();
         BeanProvider.injectFields(eggMaker);
         return eggMaker;
