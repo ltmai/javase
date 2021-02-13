@@ -206,12 +206,7 @@ public class MouseEvents extends JFrame {
 
 		private Rectangle lastBoundingBox;
 		private Rectangle repaintBox;
-
-		public Playground() 
-		{
-			super();
-		}
-		
+	
 		/**
 		 * Paint the canvas
 		 * @param g

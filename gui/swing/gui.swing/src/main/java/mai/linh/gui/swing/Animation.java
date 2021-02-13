@@ -108,8 +108,8 @@ public class Animation
 		slider.setPaintLabels(true);
 		// Create the label table
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-		labelTable.put( new Integer( MIN_VALUE ), new JLabel("slower") );
-		labelTable.put( new Integer( MAX_VALUE ), new JLabel("faster") );
+		labelTable.put( MIN_VALUE, new JLabel("slower") );
+		labelTable.put( MAX_VALUE, new JLabel("faster") );
 		slider.setLabelTable( labelTable );		
 		
 		picture = new JLabel();
