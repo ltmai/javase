@@ -54,8 +54,6 @@
       The maven-dependency-plugin copies the dependencies to path configured with <ouputDirectory>.
       The maven-jar-plugin configures META-INF\MANIFEST.MF to set prefix lib/ to dependencies.
       With these settings we can run: java -jar target\example.log4j2.jar -->
-  
-    <!-- dependency plugin: see https://maven.apache.org/plugins/maven-dependency-plugin/copy-dependencies-mojo.html -->
     <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -75,7 +73,6 @@
             </execution>       
         </executions>
       </plugin>           
-      <!--  packaging plugin: see https://maven.apache.org/components/plugins/maven-jar-plugin/jar-mojo.html --> 
       <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
@@ -85,7 +82,8 @@
               <archive>
                   <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                   <manifest>
-                      <!--add lib/* to classpath-->
+                      <!-- add entry Class-Path to MANIFEST.MF and set prefix lib/ to all dependencies, e.g.: 
+                        Class-Path: lib/log4j-api-2.13.3.jar lib/log4j-core-2.13.3.jar-->
                       <addClasspath>true</addClasspath>
                       <classpathPrefix>lib</classpathPrefix>
                       <mainClass>com.linhmai.example.log4j2.App</mainClass>

@@ -22,7 +22,7 @@ public class AppTest {
         EJBContainer ejbC = EJBContainer.createEJBContainer();
         Context ctx = ejbC.getContext();
     
-        EchoBean bean = (EchoBean) ctx.lookup("java:global/classes/MyBean");
+        EchoBean bean = (EchoBean) ctx.lookup("java:global/classes/EchoBean");
     
         assertNotNull(bean);
     
