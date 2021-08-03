@@ -11,14 +11,19 @@ import javax.json.bind.annotation.JsonbTransient;
 public class Person {
 
     private int id;
+
     @JsonbProperty("person-name")
     private String name;
+
     @JsonbProperty(nillable = true)
     private String email;
+
     @JsonbTransient
     private int age;
+
     @JsonbDateFormat("dd-MM-yyyy")
     private LocalDate registeredDate;
+
     private BigDecimal salary;
 
     public Person() {
