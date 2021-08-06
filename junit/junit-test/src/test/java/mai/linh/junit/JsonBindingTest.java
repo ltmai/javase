@@ -7,6 +7,8 @@ import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,8 +26,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
- * JSON-P : JSR 353: Java API for JSON Processing
- * JSON-B : JSR 367: Java API for JSON Binding 
+ * JSON-P : JSR 353: Java API for JSON Processing (e.g. parse, generate, transform 
+ *          and query) JSON messages. (JSON-P 1.0 in JavaEE 7)
+ *          JSR 374 supersedes JSR 353 to support JSON Pointer and JSON Patch.
+ *          (JSON-P 1.1 in JavaEE 8)
+ * JSON-B : JSR 367: Java API for JSON Binding (converting POJO to/from JSON messages)
+ *
+ * @see https://javaee.github.io/jsonp/ (JSR 374)
  * @see https://javaee.github.io/jsonb-spec/docs/user-guide.html#json-binding-api
  */
 @ExtendWith(MockitoExtension.class)
@@ -43,15 +50,21 @@ public class JsonBindingTest {
 
     private static final String CHARLIE_JSON_COMPACT = CHARLIE_AS_JSON.replaceAll("[\\s\\n]*","");
 
-    private static final String CHARLIE_NAME = "Charlie";
+    private Person chaplin = new Person(
+            1, 
+            "Charlie", 
+            "charlie@chaplin.com", 
+            20, 
+            LocalDate.of(2020, 1, 1), 
+            BigDecimal.valueOf(1000));
 
-    private static final String CHARLIE_EMAIL = "charlie@chaplin.com";
-
-    private static final BigDecimal CHARLIE_SALARY = BigDecimal.valueOf(1000);
-
-    private static final LocalDate CHARLIE_REGISTER_DATE = LocalDate.of(2020, 1, 1);
-
-    private Person charlie = new Person(1, CHARLIE_NAME, CHARLIE_EMAIL, 20, CHARLIE_REGISTER_DATE, CHARLIE_SALARY);
+    private Person albert = new Person(
+            2, 
+            "Albert", 
+            "albert@einstein.com", 
+            20, 
+            LocalDate.of(2021, 1, 1), 
+            BigDecimal.valueOf(1001));
 
     // https://javaee.github.io/javaee-spec/javadocs/javax/json/bind/Jsonb.html
     // For optimal use, JsonbBuilder and Jsonb instances should be reused - for a typical use-case, only one 
@@ -60,20 +73,45 @@ public class JsonBindingTest {
     private Jsonb jsonb = JsonbBuilder.create(new JsonbConfig()
                                              .withLocale(Locale.US)
                                              .withPropertyOrderStrategy(PropertyOrderStrategy.LEXICOGRAPHICAL));
+    
+    ////////////
+    // JSON-B
+    ////////////
 
     @Test
     public void givenPerson_whenDeserializeASerializedPerson_thenGetSamePerson() {
-        String charlieAsJson = jsonb.toJson(charlie);
+        String charlieAsJson = jsonb.toJson(chaplin);
+
         Person person = jsonb.fromJson(charlieAsJson, Person.class);
-        assertEquals(charlie, person, "Deserialized JSON is not equal to Charlie");
+
+        assertEquals(chaplin, person, "Deserialized JSON is not equal to Charlie");
     }
 
     @Test
     public void givenPersonAsJson_whenSerializeADeserializedJsonb_thenGetbackOriginalJson() {
         Person person = jsonb.fromJson(CHARLIE_JSON_COMPACT, Person.class); 
+
         String personAsJson = jsonb.toJson(person, Person.class);
+
         assertTrue(CHARLIE_JSON_COMPACT.equals(personAsJson), "Serialized person is not equal original JSON");
     }    
+
+    @Test
+    public void givenCollection_whenDeserializeSerializedCollection_thenGetSameCollection() {
+        List<Person> greatests = new ArrayList<>();
+        greatests.add(chaplin);
+        greatests.add(albert);
+
+        String greatestsAsJson = jsonb.toJson(greatests);
+        List<Person> people = jsonb.fromJson(greatestsAsJson, 
+                                             new ArrayList<Person>(){}.getClass().getGenericSuperclass());
+
+        assertTrue(Arrays.equals(greatests.toArray(), people.toArray()));
+    }
+
+    ////////////
+    // JSON-P
+    ////////////
 
     @Test
     public void givenJsonObject_whenCompareWithStringRepresentation_thenJsonPatchEmpty() {
@@ -84,15 +122,5 @@ public class JsonBindingTest {
             JsonPatch diff = Json.createDiff(expected, actual);
             assertTrue(diff.toJsonArray().isEmpty(), diff.toString());
         }
-    }
-
-    @Test
-    public void testMappingGenericCollection() {
-        List<Person> people = new ArrayList<>();
-        people.add(charlie);
-
-        String peopleAsJson = jsonb.toJson(people);
-        people = jsonb.fromJson(peopleAsJson, new ArrayList<Person>(){}.getClass().getGenericSuperclass());
-        people.get(0).equals(charlie);
     }
 }
