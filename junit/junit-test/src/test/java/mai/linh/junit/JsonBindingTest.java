@@ -4,22 +4,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
+import java.io.StringReader;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.json.JsonPatch;
 import javax.json.JsonReader;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbConfig;
 import javax.json.bind.config.PropertyOrderStrategy;
+import javax.json.stream.JsonParser;
+import javax.json.stream.JsonParser.Event;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -115,7 +118,10 @@ public class JsonBindingTest {
 
     @Test
     public void givenJsonObject_whenCompareWithStringRepresentation_thenJsonPatchEmpty() {
-        JsonObject actual = Json.createObjectBuilder().add("b", 2).add("a", 1).build();
+        JsonObject actual = Json.createObjectBuilder()
+            .add("b", 2)
+            .add("a", 1)
+            .build();
 
         try (JsonReader reader = Json.createReader(new ByteArrayInputStream("{\"a\":1,\"b\":2}".getBytes()))) {
             JsonObject expected = reader.readObject();
@@ -123,4 +129,38 @@ public class JsonBindingTest {
             assertTrue(diff.toJsonArray().isEmpty(), diff.toString());
         }
     }
+
+    @Test
+    public void givenJsonString_whenParsed_thenReceiveCorrectValues() {
+        final JsonObject json = Json.createObjectBuilder()
+            .add("name", "Charlie")
+            .add("age", BigDecimal.valueOf(70))
+            .build();
+
+        // JsonParser provides forward, read-only access to JSON data in a streamming way. This is the most 
+        // efficient way for reading JSON data. This is the only way to parse and process JSON data that are
+        // too big to be loaded in memory.
+        // @see https://javadoc.io/doc/javax.json/javax.json-api/latest/overview-summary.html
+        final JsonParser parser = Json.createParser(new StringReader(json.toString()));
+
+        while (parser.hasNext()) {
+            Event event = parser.next();
+            if (event == Event.KEY_NAME) {
+                String key = parser.getString();
+                event = parser.next();
+                switch (key) {
+                    case "name":
+                        String name = parser.getString();
+                        assertEquals("Charlie", name);
+                        break;
+                    case "age":
+                        var age = parser.getInt();
+                        assertEquals(70, age);
+                    default:
+                        break;
+                }
+            }            
+        }
+        parser.close();
+    } 
 }
