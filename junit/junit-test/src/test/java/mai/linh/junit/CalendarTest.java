@@ -1,11 +1,15 @@
 package mai.linh.junit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.junit.jupiter.api.Test;
 
 class CalendarTest {
+
+    private static final int YEAR_TO_ADD = 0;
 
     public static void printCalendar(Calendar t) {
         System.out.println(
@@ -24,9 +28,10 @@ class CalendarTest {
         Calendar epoch = new GregorianCalendar();
         epoch.setTimeInMillis(0);
 
-        printCalendar(epoch);
-        // 40 years later
-        epoch.add(Calendar.YEAR, 40);
-        printCalendar(epoch);
+        int epochYear = epoch.get(Calendar.YEAR);
+        epoch.add(Calendar.YEAR, YEAR_TO_ADD);
+        int newYear = epoch.get(Calendar.YEAR);
+
+        assertEquals(YEAR_TO_ADD, newYear - epochYear);
     }
 }

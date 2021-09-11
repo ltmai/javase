@@ -14,7 +14,6 @@ import java.util.Locale;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.json.JsonPatch;
 import javax.json.JsonReader;
 import javax.json.bind.Jsonb;
