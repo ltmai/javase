@@ -1,7 +1,7 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.zip.CRC32;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 class FlywayChecksumCalculator {
     public static int checksum(String filepath) {
@@ -25,6 +25,6 @@ class FlywayChecksumCalculator {
 
     public static void main(String[] args) {
         System.out.println(checksum(
-                "C:\\V7_34_2__mfs_setup.sql"));
+                "C:\\Workspace\\project-xyz\\project-xyz-flyway\\src\\main\\resources\\db\\migration\\oracle\\V1.0\\V1_0_1__db_setup.sql"));
     }
 }
