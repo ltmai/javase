@@ -1,5 +1,7 @@
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.function.Predicate;
 import java.util.function.Function;
 
@@ -27,13 +29,10 @@ class DistinctBy {
 
     public static <K,T> Predicate<K> createDistinctBy(Function<K, T> getter) {
         return new Predicate<K>() {
-            private List<T> values = new ArrayList<>();
+            private Map<T,K> values = new HashMap<>();
 
             public boolean test(K obj) {
-                T value = getter.apply(obj);
-                if (values.contains(value)) return false;
-                values.add(value);
-                return true;
+                return values.putIfAbsent(getter.apply(obj), obj) == null;
             }
         };
     }
