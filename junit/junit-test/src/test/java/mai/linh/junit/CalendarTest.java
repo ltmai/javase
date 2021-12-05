@@ -24,7 +24,7 @@ class CalendarTest {
     }
 
     @Test
-    public void throwsExceptionInNonLenientMode() {
+    public void givenCalendar_addYears_YearAdded() {
         Calendar epoch = new GregorianCalendar();
         epoch.setTimeInMillis(0);
 
