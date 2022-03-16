@@ -36,9 +36,26 @@ public class AppStream {
         sortedWords.stream().forEach(System.out::println);
     }
 
+    /**
+     * demonstrates return inside lambda does not break stream processing
+     * @param args
+     */
+    public void testReturnInsideForEach() {
+        System.out.println("testReturnInsideForEach");
+        Stream.of("one", "two", "three", "four").forEach(s -> {
+           System.out.print(" >>>>> " + s);
+           if (s.equals("three")) {
+               System.out.println();
+               return;
+           }
+           System.out.println(" <<<<< ");
+        });
+    }
+
     public static void main(String[] args) {
         AppStream as = new AppStream();
-        as.testStreamConcat();
-        as.testStreamDebugging();
+        //as.testStreamConcat();
+        //as.testStreamDebugging();
+        as.testReturnInsideForEach();
     }
 }
