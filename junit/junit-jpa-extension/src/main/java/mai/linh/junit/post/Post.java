@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -27,6 +28,7 @@ public class Post {
     private String title;
  
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OrderBy("time")
     private List<Comment> comments = new ArrayList<Comment>();
 
     public Post() {

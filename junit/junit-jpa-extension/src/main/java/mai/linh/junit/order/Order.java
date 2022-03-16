@@ -12,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -35,9 +35,11 @@ public class Order {
 
     private String status;
     
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @MapKeyColumn(name = "POSITION", nullable = false, insertable = false, updatable = false)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ORDER_ID", nullable = false, insertable = false, updatable = false, referencedColumnName = "ID")
+    // alternative for @MapKey:
+    // @MapKeyColumn(name = "POSITION", nullable = false, insertable = false, updatable = false)
+    @MapKey(name = "position")
     private Map<Long, Item> items = new HashMap<Long, Item>();
 
     public static Order of(String customer, Date date, String status) {

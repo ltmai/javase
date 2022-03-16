@@ -10,16 +10,21 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 @Cacheable(false)
 public class Journal {
+    /**
+     * Generate ID values from sequence SEQ_JOURNAL (created by JPA) which does not 
+     * start from 1 to avoid clashing with the entries created in init-data.sql on startup
+     */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "JournalSequenceGenerator", sequenceName = "SEQ_JOURNAL", initialValue = 99, allocationSize = 10)
+    @GeneratedValue(generator = "JournalSequenceGenerator")
     private Long id;
 
     private String category;

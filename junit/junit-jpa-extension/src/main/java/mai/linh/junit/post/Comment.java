@@ -1,5 +1,7 @@
 package mai.linh.junit.post;
 
+import java.time.Instant;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,12 +23,22 @@ public class Comment {
     private Long id;
  
     private String review;
+
+    private Instant time = Instant.now();
  
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
 
     public Comment() {
+    }
+
+    public Instant getTime() {
+        return time;
+    }
+
+    public void setTime(Instant time) {
+        this.time = time;
     }
 
     public Comment(String review) {
