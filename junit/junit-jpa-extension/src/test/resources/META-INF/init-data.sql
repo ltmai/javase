@@ -1,5 +1,5 @@
--- If you want to create the table yourself, for example to experiment with table 
--- structure, you need to first drop the table created by JPA first. 
+-- If you want to create the table yourself, for example to experiment with
+-- table structure, you need to drop the table created by JPA first. 
 -- Note that the DDL statements (DROP/CREATE TABLE) must be one-liner.
 DROP TABLE Person CASCADE;
 CREATE TABLE PERSON ( ID INTEGER PRIMARY KEY, FIRSTNAME VARCHAR(32), LASTNAME VARCHAR(32), DATEOFBIRTH DATE);
