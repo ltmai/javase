@@ -12,6 +12,9 @@
     <class>mai.linh.junit.post.Comment</class>
     <class>mai.linh.junit.journal.Journal</class>
     <class>mai.linh.junit.journal.JournalParam</class>
+    <class>mai.linh.junit.article.Article</class>
+    <class>mai.linh.junit.article.Desktop</class>
+    <class>mai.linh.junit.article.Laptop</class>
     <properties>
       <!--drop and recreate database objects on deployment (for testing purposes)-->
       <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=TRUE" />
