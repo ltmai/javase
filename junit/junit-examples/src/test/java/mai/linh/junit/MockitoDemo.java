@@ -8,6 +8,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
@@ -40,8 +41,7 @@ public class MockitoDemo {
     private List<String> mockedList;
 
     @Test
-    void spiedListCanBeVerified()
-    {
+    void spiedObjectCanBeVerified() {
         // given
         final String capturedText = "Carpe diem";
         // when
@@ -50,6 +50,20 @@ public class MockitoDemo {
         verify(spiedList).add(captor.capture());
         assertTrue(capturedText.equals(captor.getValue()));
         assertFalse(spiedList.isEmpty());
+    }
+
+    @Test
+    void createSpiedObjectOnTheFly() {
+        // given
+        final String capturedText = "Carpe diem";
+        List<String> localList = new ArrayList<>();
+        List<String> spiedObj = spy(localList);
+        // when
+        spiedObj.add(capturedText);
+        // then
+        verify(spiedObj).add(captor.capture());
+        assertTrue(capturedText.equals(captor.getValue()));
+        assertFalse(spiedObj.isEmpty());
     }
     
     /**
