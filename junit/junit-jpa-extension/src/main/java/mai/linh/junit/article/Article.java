@@ -1,6 +1,5 @@
 package mai.linh.junit.article;
 
-import javax.persistence.Cacheable;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
