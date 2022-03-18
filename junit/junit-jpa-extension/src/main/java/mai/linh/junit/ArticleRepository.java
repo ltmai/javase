@@ -29,6 +29,10 @@ public class ArticleRepository {
 	public Stream<Article> findArticleByType(String type) {
         return em.createQuery("SELECT p FROM Article p WHERE p.type = :type", Article.class)
                  .setParameter("type", type)
-                 .getResultList().stream();
+				 .getResultStream();
+	}
+
+	public void flush() {
+		em.flush();
 	}
 }

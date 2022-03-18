@@ -2,8 +2,8 @@
   xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
   version="2.1">
   <persistence-unit name="jpa-test" transaction-type="RESOURCE_LOCAL">
-    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-    <!-- <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider> -->
+    <!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <!-- put your entity classes here to register to the entity manager -->
     <class>mai.linh.junit.person.Person</class>
     <class>mai.linh.junit.order.Item</class>
@@ -24,7 +24,7 @@
       <property name="javax.persistence.schema-generation.drop-source" value="metadata" />
       <property name="javax.persistence.sql-load-script-source" value="META-INF/init-data.sql" />
       <!--hibernate configuration-->
-      <property name="hibernate.show_sql" value="false" />      
+      <property name="hibernate.show_sql" value="true" />      
       <property name="hibernate.format_sql" value="true" /> 
       <!--eclipselink configuration-->  
       <property name="eclipselink.logging.level" value="SEVERE" />
