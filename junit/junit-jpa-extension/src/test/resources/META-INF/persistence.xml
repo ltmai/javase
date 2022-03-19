@@ -27,8 +27,8 @@
       <property name="hibernate.show_sql" value="true" />      
       <property name="hibernate.format_sql" value="true" /> 
       <!--eclipselink configuration-->  
-      <property name="eclipselink.logging.level" value="SEVERE" />
-      <property name="eclipselink.logging.level.sql" value="SEVERE"/>
+      <property name="eclipselink.logging.level" value="FINE" />
+      <property name="eclipselink.logging.level.sql" value="FINE"/>
       <property name="eclipselink.logging.parameters" value="true"/>
     </properties>
   </persistence-unit>

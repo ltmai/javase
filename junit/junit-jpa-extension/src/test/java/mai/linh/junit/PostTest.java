@@ -40,7 +40,6 @@ public class PostTest {
         // given
         // when
         Optional<Post> post = postRepository.findPostById(1L);
-        System.out.println(post);
         // then
         assertAll(
             ()->assertTrue(post.isPresent()),
