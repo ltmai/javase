@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -41,10 +42,11 @@ public class ArticleTest {
     }
 
     /**
-     * Change <provider> to EclipseLink for this test, because
-     * Hibernate has a bug generating the SQL statements for H2
+     * Change <provider> in persistence.xml to EclipseLink for this test,
+     * because Hibernate has a bug generating the SQL statements for H2
      * in this unit test.
      */
+    @Disabled
     @Test
     public void whenAddingArticle_thenArticleCreated() {
         // given
