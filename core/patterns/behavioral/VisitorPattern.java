@@ -52,7 +52,7 @@ public class VisitorPattern {
     }
 
     /**
-     * Class Vector: help class used in define Operations.
+     * Class Vector: helper class used in define Operations.
      */
     public static class Vector extends Point {
 

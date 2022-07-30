@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 public class SomeOtherTest {
    @Test
-   void splitString () {
+   void String_split_example () {
         var output = List.of("abc , def , ghi".split(",")).stream().map(String::trim).collect(Collectors.toList());
 
         assertAll(
