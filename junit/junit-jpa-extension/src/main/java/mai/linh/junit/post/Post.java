@@ -42,7 +42,6 @@ public class Post {
     public void addComment(Comment... comments) {
         for (Comment comment : comments) {
             this.comments.add(comment);
-            comment.setPost(this);
         }
     }
  
