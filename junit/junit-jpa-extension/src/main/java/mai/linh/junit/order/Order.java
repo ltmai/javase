@@ -35,7 +35,7 @@ public class Order {
 
     private String status;
     
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ORDER_ID", nullable = false, insertable = false, updatable = false, referencedColumnName = "ID")
     // alternative for @MapKey:
     // @MapKeyColumn(name = "POSITION", nullable = false, insertable = false, updatable = false)

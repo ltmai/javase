@@ -31,7 +31,7 @@ public class Journal {
 
     private String message;
     
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "JournalParam", joinColumns = {@JoinColumn(name = "JOURNAL_ID", referencedColumnName = "ID")})
     @MapKeyColumn(name = "POSITION")
     @Column(name = "PARAMETER")
