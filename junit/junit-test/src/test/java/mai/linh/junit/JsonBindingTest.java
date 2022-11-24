@@ -1,6 +1,7 @@
 package mai.linh.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
@@ -117,23 +118,40 @@ public class JsonBindingTest {
 
     @Test
     public void givenJsonObject_whenCompareWithStringRepresentation_thenJsonPatchEmpty() {
-        JsonObject actual = Json.createObjectBuilder()
+        JsonObject expected = Json.createObjectBuilder()
             .add("b", 2)
             .add("a", 1)
             .build();
 
         try (JsonReader reader = Json.createReader(new ByteArrayInputStream("{\"a\":1,\"b\":2}".getBytes()))) {
-            JsonObject expected = reader.readObject();
+            JsonObject actual = reader.readObject();
             JsonPatch diff = Json.createDiff(expected, actual);
             assertTrue(diff.toJsonArray().isEmpty(), diff.toString());
+            assertEquals(actual.getInt("a"), 1);
+            assertEquals(actual.getInt("b"), 2);
+            assertFalse(actual.containsKey("c"));
+        }
+    }
+
+    @Test
+    public void givenJsonObject()
+    {
+        String json = "[{\"type\":\"ORDER\",\"configuration\":\"serial-number\"},{\"type\":\"CONSTANT\",\"configuration\":\"const\"}]";
+        try (JsonReader reader = Json.createReader(new ByteArrayInputStream(json.getBytes()))) {
+            var actual = reader.readArray();
+            assertEquals(actual.size(), 2);
         }
     }
 
     @Test
     public void givenJsonString_whenParsed_thenReceiveCorrectValues() {
+        final String PROPERTY_NAME = "name";
+        final String PROPERTY_AGE = "age";
+        final String VALUE_NAME = "Charlie";
+        final int    VALUE_AGE = 70;
         final JsonObject json = Json.createObjectBuilder()
-            .add("name", "Charlie")
-            .add("age", BigDecimal.valueOf(70))
+            .add(PROPERTY_NAME, VALUE_NAME)
+            .add(PROPERTY_AGE, BigDecimal.valueOf(VALUE_AGE))
             .build();
 
         // JsonParser provides forward, read-only access to JSON data in a streamming way. This is the most 
@@ -148,13 +166,13 @@ public class JsonBindingTest {
                 String key = parser.getString();
                 event = parser.next();
                 switch (key) {
-                    case "name":
+                    case PROPERTY_NAME:
                         String name = parser.getString();
-                        assertEquals("Charlie", name);
+                        assertEquals(VALUE_NAME, name);
                         break;
-                    case "age":
+                    case PROPERTY_AGE: 
                         var age = parser.getInt();
-                        assertEquals(70, age);
+                        assertEquals(VALUE_AGE, age);
                     default:
                         break;
                 }
