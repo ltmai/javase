@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,5 +90,24 @@ class DateTimeTest {
         assertEquals(count, intervalsAsString.size());
         assertEquals(firstInterval, intervalsAsString.get(0));
         assertEquals(lastInterval, intervalsAsString.get(intervalsAsString.size()-1));
+    }
+
+    @Test
+    public void DateLocalDate_convertLocalDateToDateAndBack_getTheSameLocalDate() {
+        LocalDate localDate = LocalDate.parse("2022-12-14");
+        ZoneId zoneId = ZoneId.of("Europe/Helsinki");
+        Date date = DateTimeUtils.fromLocalDate(localDate, zoneId);
+
+        assertEquals(localDate, DateTimeUtils.fromDate(date, zoneId));
+    }
+
+    @Test
+    public void ZonedDateTime_compare_MidnightInHelsinkiIsBeforeMidnightInBerlin() {
+        LocalDate localDate = LocalDate.parse("2022-12-14");
+
+        ZonedDateTime zdtHelsinki = localDate.atStartOfDay(ZoneId.of("Europe/Helsinki"));
+        ZonedDateTime zdtBerlin = localDate.atStartOfDay(ZoneId.of("Europe/Berlin"));
+
+        assertTrue(zdtBerlin.isAfter(zdtHelsinki));
     }
 }

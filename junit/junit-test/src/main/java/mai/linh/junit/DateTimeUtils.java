@@ -1,14 +1,30 @@
 package mai.linh.junit;
 
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.Temporal;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.BiFunction;
 
 public class DateTimeUtils {
+
+    public static Date fromLocalDate(LocalDate localDate, ZoneId zoneId) {
+        ZonedDateTime zdt = localDate.atStartOfDay(zoneId != null ? zoneId: ZoneId.systemDefault());
+        Instant instant = zdt.toInstant();
+        return Date.from(instant);
+    }
+
+    public static LocalDate fromDate(Date date, ZoneId zoneId) {
+        Instant instant = date.toInstant();
+        ZonedDateTime zdt = instant.atZone(zoneId != null ? zoneId : ZoneId.systemDefault());
+        return zdt.toLocalDate();
+    }
     
     public static class Interval 
     {
