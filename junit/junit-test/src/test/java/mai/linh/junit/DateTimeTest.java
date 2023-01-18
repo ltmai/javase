@@ -1,15 +1,19 @@
 package mai.linh.junit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -109,5 +113,22 @@ class DateTimeTest {
         ZonedDateTime zdtBerlin = localDate.atStartOfDay(ZoneId.of("Europe/Berlin"));
 
         assertTrue(zdtBerlin.isAfter(zdtHelsinki));
+    }
+
+    @Test
+    public void DateTimeFormatter_format_sameTimeDifferentLocales() {
+        LocalDate dateDE = LocalDate.parse("14.12.2022", DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.GERMANY));
+        LocalDate dateUS = LocalDate.parse("Dec 14, 2022", DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.US));
+
+        System.out.println("ISO_LOCAL_DATE: " + dateDE.format(DateTimeFormatter.ISO_LOCAL_DATE));
+        System.out.println("In locale US  : " + dateDE.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.US)));
+        System.out.println("In locale UK  : " + dateDE.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.UK)));
+
+        System.out.println("Month: " + dateDE.format(DateTimeFormatter.ofPattern("LLL-u").withLocale(Locale.US)));
+        System.out.println("Week : " + dateDE.format(DateTimeFormatter.ofPattern("w").withLocale(Locale.US)));
+
+        // should be the same time
+        assertFalse(dateDE.isAfter(dateUS));
+        assertFalse(dateUS.isAfter(dateDE));
     }
 }
