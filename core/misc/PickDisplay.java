@@ -5,8 +5,6 @@ import java.io.OutputStream;
 import java.io.BufferedInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.InetAddress;
-import java.net.SocketException;
 
 /**
  * Pick Display emulator
