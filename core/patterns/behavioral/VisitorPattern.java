@@ -1,10 +1,10 @@
 /**
  * VisitorPattern
  * 
- * Visitor pattern encapsulate the operations on a object hierarchy, and allows
+ * Visitor pattern encapsulates the operations on a object hierarchy, and allows
  * you define new operations without changing the classes.
  * 
- * In Visitor pattern, all operations implements a common interface Operation,
+ * In Visitor pattern, all operations implement a common interface Operation,
  * which defines visit() methods for ALL CONCRETE input types from the Shape
  * hierachy, which is a down-side of this pattern.
  * 

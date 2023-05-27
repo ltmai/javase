@@ -44,7 +44,7 @@ public class ProxyPattern {
 
         private Service service;
 
-        private Map<String, String> cache = new HashMap();
+        private Map<String, String> cache = new HashMap<>();
 
         public ServiceProxy(Service service) {
             this.service = service;

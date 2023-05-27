@@ -5,9 +5,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.Table;
 
 @Entity
 @Cacheable(false)
+@Table(name="JOURNAL_PARAM")
 @IdClass(JournalParamPk.class)
 public class JournalParam {
 

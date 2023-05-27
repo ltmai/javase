@@ -14,9 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
 @Cacheable(false)
+@Table(name="JOURNAL")
 public class Journal {
     /**
      * Generate ID values from sequence SEQ_JOURNAL (created by JPA) which does not 

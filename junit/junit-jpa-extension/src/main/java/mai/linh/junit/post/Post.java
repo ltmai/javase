@@ -28,7 +28,7 @@ public class Post {
  
     private String title;
  
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy("time")
     private List<Comment> comments = new ArrayList<Comment>();
 
@@ -47,7 +47,6 @@ public class Post {
  
     public void removeComment(Comment comment) {
         comments.remove(comment);
-        comment.setPost(null);
     }
 
     public Long getId() {

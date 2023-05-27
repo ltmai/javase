@@ -44,12 +44,12 @@ public class PostTest {
         assertAll(
             ()->assertTrue(post.isPresent()),
             ()->assertEquals("First Post", post.get().getTitle()),
-            ()->assertEquals(1, post.get().getComments().size())
+            ()->assertEquals(3, post.get().getComments().size())
         );
     }
 
     @Test
-    public void whenAddingPost_thenNewPostCreated() {
+    public void whenAddPost_thenNewPostCreated() {
         // given
         Post post = new Post(NEW_POST_TITLE);
         Comment comment1 = new Comment("First review");
@@ -68,5 +68,20 @@ public class PostTest {
             ()->assertTrue(dbPost.get().getComments().contains(comment2)),
             ()->assertTrue(dbPost.get().getComments().contains(comment3))
         );
+    }
+
+    @Test
+    public void whenRemoveComment_thenCommentRemoved()
+    {
+        Optional<Post> post = postRepository.findPostById(1L);
+        post.ifPresent(p -> {
+            Comment c = p.getComments().get(0);
+            p.removeComment(c); 
+            em.merge(p);
+        }); 
+
+        Optional<Post> dbPost = postRepository.findPostById(1L);
+        assertTrue(dbPost.isPresent());
+        assertEquals(dbPost.get().getComments().size(), 2);
     }
 }
